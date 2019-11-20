@@ -516,17 +516,25 @@
                 var msg = result.msg;
                 if(code === 1000){
                     var tableData = result.data;
+                    var h="";
                     for(var i=0;i<tableData.length;i++) {
-                        var h="";
-                        h += "<tr>";
+                        var dataObj = tableData[i];
 
-                            h += "<td>" + tableData[i][0] + "</td>";
-                            h += "<td>" + tableData[i][1] + "</td>";
+                        console.log("authority:"+ dataObj.authority);
+                        console.log("description:"+dataObj.description);
+                        var authority = dataObj.authority;
+                        var description = dataObj.description;
+
+                        var num = i+1;
+                        h += "<tr>";
+                        h += "<td>" + num + "</td>";
+                            h += "<td>" + authority + "</td>";
+                            h += "<td>" + description + "</td>";
 
                         h += "</tr>";
                     }
 
-                    $("#tb").innerHTML = h;
+                document.getElementById("tb").innerHTML=h;
                 }else{
                     alert(msg);
                     console.log(msg);
