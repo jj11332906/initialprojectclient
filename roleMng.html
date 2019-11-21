@@ -514,14 +514,12 @@
                         </div>-->
                     <hr />
                     <div class="col-sm-12">
-                        <h2>Tree</h2>
+                        <br/>
+                        <br/>
+                        <h4>权限</h4>
                         <div id="treeview-checkable" class=""></div>
                     </div>
                     <hr />
-                    <div class="col-sm-12">
-                        <h2>Events</h2>
-                        <div id="checkable-output"></div>
-                    </div>
 
                 </div>
                 <div class="modal-footer">
@@ -711,7 +709,6 @@
                     $checkableTree.treeview('checkNode',[selectNodes,{silent:true}])
                 }
                 //返回给定节点ID的单一节点对象
-                var parentNode=$('#treeview').treeview("getNode",node.parentId);
                 setParentNodeCheck(node);
             },
             onNodeUnchecked: function (event, node) {
@@ -720,6 +717,20 @@
                 if(selectNodes){//子节点不为空，则取消选中所有子节点
                     $checkableTree.treeview("uncheckNode",[selectNodes,{silent:true}]);
                 }
+                if(node.parentId!==undefined) {
+                    var parentNode = $checkableTree.treeview("getNode", node.parentId);
+                    var uncheckNodes = getParentNodeIdArr(parentNode);
+
+                    console.info(uncheckNodes);
+                    for (var idx = 0; idx < uncheckNodes.length; idx++) {
+                        var nodeId = uncheckNodes[idx];
+                        var uncheckNode = $checkableTree.treeview('getNode', nodeId);
+                        if (uncheckNode.state.checked === true) {
+                            $checkableTree.treeview('uncheckNode', [uncheckNode, {silent: true}])
+                        }
+                    }
+                }
+
             }
         });
 
@@ -740,7 +751,19 @@
             }
             return ts;
         };
-
+        var getParentNodeIdArr = function(node) {
+            console.info(node);
+            var ts = [];
+            ts.push(node.nodeId);
+            if(node.nodeId!==0){
+                var parentNode = $checkableTree.treeview("getNode", node.parentId);
+                var getNodeDieDai = getParentNodeIdArr(parentNode);
+                for(j in getNodeDieDai) {
+                    ts.push(getNodeDieDai[j]);
+                }
+            }
+            return ts;
+        };
         var setParentNodeCheck = function(node) {
             var parentNode = $checkableTree.treeview("getNode", node.parentId);
             if(parentNode.nodes) {
