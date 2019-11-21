@@ -8,23 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="">
     <!-- Stylesheets -->
-    <link href="style/bootstrap.css" rel="stylesheet">
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
     <!-- Font awesome icon -->
-    <link rel="stylesheet" href="style/font-awesome.css">
+    <link rel="stylesheet" href="style/font-awesome.min.css">
+    <!-- bootstrap-treeview -->
+    <link rel="stylesheet" href="style/css/bootstrap-treeview.css">
     <!-- jQuery UI -->
     <link rel="stylesheet" href="style/jquery-ui.css">
     <!-- Calendar -->
     <link rel="stylesheet" href="style/fullcalendar.css">
     <!-- prettyPhoto -->
     <link rel="stylesheet" href="style/prettyPhoto.css">
-    <!-- Star rating -->
-    <link rel="stylesheet" href="style/rateit.css">
-    <!-- Date picker -->
-    <link rel="stylesheet" href="style/bootstrap-datetimepicker.min.css">
     <!-- CLEditor -->
     <link rel="stylesheet" href="style/jquery.cleditor.css">
-    <!-- Uniform -->
-    <link rel="stylesheet" href="style/uniform.default.css">
     <!-- Bootstrap toggle -->
     <link rel="stylesheet" href="style/bootstrap-switch.css">
     <!-- Main stylesheet -->
@@ -412,7 +408,8 @@
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <button type="button" class="btn btn-success">搜索</button>
-                                                    <button type="button" class="btn btn-danger">新增</button>
+                                                    <!--<button type="button" class="btn btn-danger">新增</button>-->
+                                                    <a href="#myModal" class="btn btn-info" data-toggle="modal">新增</a>
                                                 </div>
                                             </div>
                                         </form>
@@ -475,7 +472,49 @@
 
     <!-- Mainbar ends -->
     <div class="clearfix"></div>
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">新增角色</h4>
+                </div>
+                <div class="modal-body">
+                    <hr />
+                    <!-- Form starts.  -->
+                    <form class="form-horizontal" role="form">
 
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">角色名称</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" placeholder="名称">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">角色描述</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" rows="3" placeholder="描述"></textarea>
+                            </div>
+                        </div>
+
+                    </form>
+                    <hr />
+                    <hr/>
+                        <div class="col-sm-12">
+                            <br/>
+                            <h4>权限设置</h4>
+                            <div id="treeview1" class=""></div>
+                        </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+                    <button type="button" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- Content ends -->
 
@@ -498,35 +537,10 @@
 
 <!-- JS -->
 <script src="js/jquery.js"></script> <!-- jQuery -->
-<script src="js/bootstrap.js"></script> <!-- Bootstrap -->
-<script src="js/jquery-ui-1.9.2.custom.min.js"></script> <!-- jQuery UI -->
-<script src="js/fullcalendar.min.js"></script> <!-- Full Google Calendar - Calendar -->
-<script src="js/jquery.rateit.min.js"></script> <!-- RateIt - Star rating -->
-<script src="js/jquery.prettyPhoto.js"></script> <!-- prettyPhoto -->
+<script src="bootstrap-3.3.7-dist/js/bootstrap.js"></script> <!-- Bootstrap -->- prettyPhoto -->
 
-<!-- jQuery Flot -->
-<script src="js/excanvas.min.js"></script>
-<script src="js/jquery.flot.js"></script>
-<script src="js/jquery.flot.resize.js"></script>
-<script src="js/jquery.flot.pie.js"></script>
-<script src="js/jquery.flot.stack.js"></script>
 
-<!-- jQuery Notification - Noty -->
-<script src="js/jquery.noty.js"></script> <!-- jQuery Notify -->
-<script src="js/themes/default.js"></script> <!-- jQuery Notify -->
-<script src="js/layouts/bottom.js"></script> <!-- jQuery Notify -->
-<script src="js/layouts/topRight.js"></script> <!-- jQuery Notify -->
-<script src="js/layouts/top.js"></script> <!-- jQuery Notify -->
-<!-- jQuery Notification ends -->
-
-<script src="js/sparklines.js"></script> <!-- Sparklines -->
-<script src="js/jquery.cleditor.min.js"></script> <!-- CLEditor -->
-<script src="js/bootstrap-datetimepicker.min.js"></script> <!-- Date picker -->
-<script src="js/jquery.uniform.min.js"></script> <!-- jQuery Uniform -->
-<script src="js/bootstrap-switch.min.js"></script> <!-- Bootstrap Toggle -->
-<script src="js/filter.js"></script> <!-- Filter for support page -->
-<script src="js/custom.js"></script> <!-- Custom codes -->
-<script src="js/charts.js"></script> <!-- Charts & Graphs -->
+<script src="js/bootstrap-treeview.js"></script> <!-- Bootstrap -->
 <script>
 
     function dataLoad() {
@@ -584,6 +598,62 @@
     $(function(){
 
         dataLoad();
+        var defaultData = [
+            {
+                text: 'Parent 1',
+                href: '#parent1',
+                tags: ['4'],
+                nodes: [
+                    {
+                        text: 'Child 1',
+                        href: '#child1',
+                        tags: ['2'],
+                        nodes: [
+                            {
+                                text: 'Grandchild 1',
+                                href: '#grandchild1',
+                                tags: ['0']
+                            },
+                            {
+                                text: 'Grandchild 2',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            }
+                        ]
+                    },
+                    {
+                        text: 'Child 2',
+                        href: '#child2',
+                        tags: ['0']
+                    }
+                ]
+            },
+            {
+                text: 'Parent 2',
+                href: '#parent2',
+                tags: ['0']
+            },
+            {
+                text: 'Parent 3',
+                href: '#parent3',
+                tags: ['0']
+            },
+            {
+                text: 'Parent 4',
+                href: '#parent4',
+                tags: ['0']
+            },
+            {
+                text: 'Parent 5',
+                href: '#parent5'  ,
+                tags: ['0']
+            }
+        ];
+
+        $('#treeview1').treeview({
+            data: defaultData,
+            showCheckbox:true
+        });
     });
 </script>
 </body>
