@@ -506,15 +506,27 @@
 
                     </form>
                     <hr />
-                    <hr/>
+<!--
                         <div class="col-sm-12">
                             <br/>
                             <h4>权限设置</h4>
                             <div id="treeview1" class=""></div>
-                        </div>
+                        </div>-->
+                    <hr />
+                    <div class="col-sm-12">
+                        <h2>Tree</h2>
+                        <div id="treeview-checkable" class=""></div>
+                    </div>
+                    <hr />
+                    <div class="col-sm-12">
+                        <h2>Events</h2>
+                        <div id="checkable-output"></div>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="btn-check-all">checkALL</button>
+
                     <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
                     <button type="button" class="btn btn-primary">保存</button>
                 </div>
@@ -682,10 +694,106 @@
             }
         ];
 
-        $('#treeview1').treeview({
+//        $('#treeview1').treeview({
+//            data: defaultData,
+//            showCheckbox:true
+//        });
+        var $checkableTree = $('#treeview-checkable').treeview({
             data: defaultData,
-            showCheckbox:true
+            showIcon: false,
+            showCheckbox: true,
+            multiSelect:false,
+            onNodeChecked: function(event, node) {
+//                $('#checkable-output').prepend('<p>' + node.text + ' was checked</p>');
+                var selectNodes= getChildNodeIdArr(node);//获取所有节点
+                if(selectNodes){//如果子节点不为空，即存在子节点，则选中所有子节点
+                    //选择指定的节点，接收节点或节点ID
+                    $checkableTree.treeview('checkNode',[selectNodes,{silent:true}])
+                }
+                //返回给定节点ID的单一节点对象
+                var parentNode=$('#treeview').treeview("getNode",node.parentId);
+                setParentNodeCheck(node);
+            },
+            onNodeUnchecked: function (event, node) {
+//                $('#checkable-output').prepend('<p>' + node.text + ' was unchecked</p>');
+                var selectNodes=getChildNodeIdArr(node);
+                if(selectNodes){//子节点不为空，则取消选中所有子节点
+                    $checkableTree.treeview("uncheckNode",[selectNodes,{silent:true}]);
+                }
+            }
         });
+
+        var getChildNodeIdArr = function(node) {
+            var ts = [];
+            if(node.nodes) {
+                for(x in node.nodes) {
+                    ts.push(node.nodes[x].nodeId);
+                    if(node.nodes[x].nodes) {
+                        var getNodeDieDai = getChildNodeIdArr(node.nodes[x]);//有第二层，第三层子节点的情况
+                        for(j in getNodeDieDai) {
+                            ts.push(getNodeDieDai[j]);
+                        }
+                    }
+                }
+            } else {
+                ts.push(node.nodeId);
+            }
+            return ts;
+        };
+
+        var setParentNodeCheck = function(node) {
+            var parentNode = $checkableTree.treeview("getNode", node.parentId);
+            if(parentNode.nodes) {
+                var checkedCount = 0;
+                for(x in parentNode.nodes) {
+                    if(parentNode.nodes[x].state.checked) {
+                        checkedCount++;
+                    } else {
+                        break;
+                    }
+                }
+                if(checkedCount === parentNode.nodes.length) {
+                    $checkableTree.treeview("checkNode", parentNode.nodeId);
+                    setParentNodeCheck(parentNode);
+                }
+            }
+        };
+        var findCheckableNodess = function() {
+            return $checkableTree.treeview('search', [ $('#input-check-node').val(), { ignoreCase: false, exactMatch: false } ]);
+        };
+        var checkableNodes = findCheckableNodess();
+        
+        var findParentNode = function (node) {
+            return $checkableTree.treeview('getParent', node);
+        };
+
+        // Check/uncheck/toggle nodes
+        $('#input-check-node').on('keyup', function (e) {
+            checkableNodes = findCheckableNodess();
+            $('.check-node').prop('disabled', !(checkableNodes.length >= 1));
+        });
+
+        $('#btn-check-node.check-node').on('click', function (e) {
+            $checkableTree.treeview('checkNode', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
+        });
+
+        $('#btn-uncheck-node.check-node').on('click', function (e) {
+            $checkableTree.treeview('uncheckNode', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
+        });
+
+        $('#btn-toggle-checked.check-node').on('click', function (e) {
+            $checkableTree.treeview('toggleNodeChecked', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
+        });
+
+        // Check/uncheck all
+        $('#btn-check-all').on('click', function (e) {
+            $checkableTree.treeview('checkAll', { silent: $('#chk-check-silent').is(':checked') });
+        });
+
+        $('#btn-uncheck-all').on('click', function (e) {
+            $checkableTree.treeview('uncheckAll', { silent: $('#chk-check-silent').is(':checked') });
+        });
+
     });
 </script>
 </body>
