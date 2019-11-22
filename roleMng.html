@@ -416,6 +416,7 @@
                                                     <button type="button" class="btn btn-success">搜索</button>
                                                     <!--<button type="button" class="btn btn-danger">新增</button>-->
                                                     <a href="#myModal" class="btn btn-info" data-toggle="modal">新增</a>
+                                                    <button type="button" class="btn btn-success">搜索</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -493,14 +494,14 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label">角色名称</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control" placeholder="名称">
+                                <input type="text" class="form-control" placeholder="名称" id="roleName">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-lg-4 control-label">角色描述</label>
                             <div class="col-lg-8">
-                                <textarea class="form-control" rows="3" placeholder="描述"></textarea>
+                                <textarea class="form-control" rows="3" placeholder="描述" id="roleDesc"></textarea>
                             </div>
                         </div>
 
@@ -517,16 +518,16 @@
                         <br/>
                         <br/>
                         <h4>权限</h4>
-                        <div id="treeview-checkable" class=""></div>
+                        <div id="treeview-checkable"></div>
                     </div>
                     <hr />
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="btn-check-all">checkALL</button>
+                    <button type="button" class="btn btn-danger" id="btn-check-all">获取选中的权限</button>
 
                     <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
-                    <button type="button" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-primary" id="btn-add-role">保存</button>
                 </div>
             </div>
         </div>
@@ -587,113 +588,8 @@
 
     var $checkableTree;
 
-    function getTree() {
-        // Some logic to retrieve, or generate tree structure
-        var data = [{
-            "text": "管理员",
-                "tags": [
-                "sysadmin"
-            ],
-                "nodes": [
-                {
-                    "text": "账号管理",
-                    "tags": [
-                        "userAccountMng"
-                    ],
-                    "nodes": [
-                        {
-                            "text": "账号读取",
-                            "tags": [
-                                "accountRead"
-                            ],
-                            "nodes": null
-                        },
-                        {
-                            "text": "账号删除",
-                            "tags": [
-                                "accountDelete"
-                            ],
-                            "nodes": null
-                        },
-                        {
-                            "text": "账号添加",
-                            "tags": [
-                                "accountAdd"
-                            ],
-                            "nodes": null
-                        },
-                        {
-                            "text": "账号修改",
-                            "tags": [
-                                "accountUpdate"
-                            ],
-                            "nodes": null
-                        }
-                    ]
-                },
-                {
-                    "text": "角色管理",
-                    "tags": [
-                        "roleMng"
-                    ],
-                    "nodes": [
-                        {
-                            "text": "角色读取",
-                            "tags": [
-                                "roleRead"
-                            ],
-                            "nodes": null
-                        },
-                        {
-                            "text": "角色删除",
-                            "tags": [
-                                "roleDelete"
-                            ],
-                            "nodes": null
-                        },
-                        {
-                            "text": "角色添加",
-                            "tags": [
-                                "roleAdd"
-                            ],
-                            "nodes": null
-                        },
-                        {
-                            "text": "角色修改",
-                            "tags": [
-                                "roleUpdate"
-                            ],
-                            "nodes": null
-                        }
-                    ]
-                },
-                {
-                    "text": "文章资讯管理",
-                    "tags": [
-                        "articleMng"
-                    ],
-                    "nodes": [
-                        {
-                            "text": "资讯分类管理",
-                            "tags": [
-                                "category"
-                            ],
-                            "nodes": null
-                        },
-                        {
-                            "text": "资讯管理",
-                            "tags": [
-                                "article"
-                            ],
-                            "nodes": null
-                        }
-                    ]
-                }
-            ]
-        }];
-        return data;
-    }
-    function getTree1(){
+
+    function getTree(){
         var defaultData = [
         ];
         $.ajax({
@@ -786,9 +682,11 @@
 
     };
     $(function(){
+        //todo 加载角色数据
         dataLoad();
+        //todo 初始化权限树
         $checkableTree = $('#treeview-checkable').treeview({
-            data: getTree1(),
+            data: getTree(),
             showIcon: false,
             showCheckbox: true,
             multiSelect:false,
@@ -872,41 +770,107 @@
                 }
             }
         };
-        var findCheckableNodess = function() {
+        var findCheckableNodes = function() {
             return $checkableTree.treeview('search', [ $('#input-check-node').val(), { ignoreCase: false, exactMatch: false } ]);
         };
-        var checkableNodes = findCheckableNodess();
-        
+        var checkableNodes = findCheckableNodes();
+
+
         var findParentNode = function (node) {
             return $checkableTree.treeview('getParent', node);
         };
 
-        // Check/uncheck/toggle nodes
-        $('#input-check-node').on('keyup', function (e) {
-            checkableNodes = findCheckableNodess();
-            $('.check-node').prop('disabled', !(checkableNodes.length >= 1));
-        });
-
-        $('#btn-check-node.check-node').on('click', function (e) {
-            $checkableTree.treeview('checkNode', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
-        });
-
-        $('#btn-uncheck-node.check-node').on('click', function (e) {
-            $checkableTree.treeview('uncheckNode', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
-        });
-
-        $('#btn-toggle-checked.check-node').on('click', function (e) {
-            $checkableTree.treeview('toggleNodeChecked', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
-        });
-
-        // Check/uncheck all
+        var checkedNodes = function(){
+            return $checkableTree.treeview('getChecked');
+        };
         $('#btn-check-all').on('click', function (e) {
-            $checkableTree.treeview('checkAll', { silent: $('#chk-check-silent').is(':checked') });
+            var checkedTags = checkedNodesTags();
+            console.log(checkedTags);
         });
+        //todo 获取复选框选中的权限tags
+        var checkedNodesTags = function(){
+            var tags = [];
+            var nodes = $checkableTree.treeview('getChecked');
+            if(nodes&&nodes.length>0){
+                for (var idx = 0; idx < nodes.length; idx++) {
+                    var node = nodes[idx];
+                    var tag = node.tags;
+                    tags.push(tag[0]);
+                }
 
-        $('#btn-uncheck-all').on('click', function (e) {
-            $checkableTree.treeview('uncheckAll', { silent: $('#chk-check-silent').is(':checked') });
-        });
+            }else{
+                alert("请选择角色权限");
+            }
+            return tags;
+        };
+        //todo 添加角色
+        var addRole = function (){
+            var roleName = $("#roleName").val();
+            var roleDesc = $("#roleDesc").val();
+            var checkedTags = checkedNodesTags();
+            var checkedTagsStr = checkedTags.join(",");
+            $.ajax({
+                //请求方式
+                type : "POST",
+                //请求的媒体类型
+                contentType: "application/x-www-form-urlencoded",
+                async: false,
+                //请求地址
+                url : "http://127.0.0.1:8095/role/add",
+                //数据，json字符串
+                data : {
+                    roleName:roleName,
+                    roleDesc:roleDesc,
+                    checkedTags:checkedTagsStr
+                },
+                //请求成功
+                success : function(result) {
+                    console.log(result);
+
+                    var code = result.code;
+                    var msg = result.msg;
+                    if(code === 1000){
+                        alert('操作成功');
+
+                    }else{
+                        alert(msg);
+                        console.log(msg);
+                    }
+
+
+                },
+                //请求失败，包含具体的错误信息
+                error : function(e){
+                    console.log(e.status);
+                    console.log(e.responseText);
+                }
+            });
+        };
+        //todo 点击添加角色按钮
+        $('#btn-add-role').on('click',function (e) {
+            addRole();
+        })
+        /*
+                $('#btn-check-node.check-node').on('click', function (e) {
+                    $checkableTree.treeview('checkNode', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
+                });
+
+                $('#btn-uncheck-node.check-node').on('click', function (e) {
+                    $checkableTree.treeview('uncheckNode', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
+                });
+
+                $('#btn-toggle-checked.check-node').on('click', function (e) {
+                    $checkableTree.treeview('toggleNodeChecked', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
+                });
+
+                // Check/uncheck all
+                $('#btn-check-all').on('click', function (e) {
+                    $checkableTree.treeview('checkAll', { silent: $('#chk-check-silent').is(':checked') });
+                });
+
+                $('#btn-uncheck-all').on('click', function (e) {
+                    $checkableTree.treeview('uncheckAll', { silent: $('#chk-check-silent').is(':checked') });
+                });*/
 
     });
 </script>
