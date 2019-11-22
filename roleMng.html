@@ -184,7 +184,6 @@
                                                     <button type="button" class="btn btn-success">搜索</button>
                                                     <!--<button type="button" class="btn btn-danger">新增</button>-->
                                                     <a href="#myModal" class="btn btn-info" data-toggle="modal">新增</a>
-                                                    <button type="button" class="btn btn-success">搜索</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -397,6 +396,7 @@
         return defaultData;
     }
     function dataLoad() {
+        document.getElementById("tb").innerHTML="";
         $.ajax({
             //请求方式
             type : "GET",
@@ -599,6 +599,7 @@
                     var msg = result.msg;
                     if(code === 1000){
                         alert('操作成功');
+                        dataLoad();
                         $("#myModal").modal('hide');
                     }else{
                         alert(msg);
