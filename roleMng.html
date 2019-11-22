@@ -585,6 +585,153 @@
 <script src="js/bootstrap-treeview.js"></script> <!-- Bootstrap -->
 <script>
 
+    var $checkableTree;
+
+    function getTree() {
+        // Some logic to retrieve, or generate tree structure
+        var data = [{
+            "text": "管理员",
+                "tags": [
+                "sysadmin"
+            ],
+                "nodes": [
+                {
+                    "text": "账号管理",
+                    "tags": [
+                        "userAccountMng"
+                    ],
+                    "nodes": [
+                        {
+                            "text": "账号读取",
+                            "tags": [
+                                "accountRead"
+                            ],
+                            "nodes": null
+                        },
+                        {
+                            "text": "账号删除",
+                            "tags": [
+                                "accountDelete"
+                            ],
+                            "nodes": null
+                        },
+                        {
+                            "text": "账号添加",
+                            "tags": [
+                                "accountAdd"
+                            ],
+                            "nodes": null
+                        },
+                        {
+                            "text": "账号修改",
+                            "tags": [
+                                "accountUpdate"
+                            ],
+                            "nodes": null
+                        }
+                    ]
+                },
+                {
+                    "text": "角色管理",
+                    "tags": [
+                        "roleMng"
+                    ],
+                    "nodes": [
+                        {
+                            "text": "角色读取",
+                            "tags": [
+                                "roleRead"
+                            ],
+                            "nodes": null
+                        },
+                        {
+                            "text": "角色删除",
+                            "tags": [
+                                "roleDelete"
+                            ],
+                            "nodes": null
+                        },
+                        {
+                            "text": "角色添加",
+                            "tags": [
+                                "roleAdd"
+                            ],
+                            "nodes": null
+                        },
+                        {
+                            "text": "角色修改",
+                            "tags": [
+                                "roleUpdate"
+                            ],
+                            "nodes": null
+                        }
+                    ]
+                },
+                {
+                    "text": "文章资讯管理",
+                    "tags": [
+                        "articleMng"
+                    ],
+                    "nodes": [
+                        {
+                            "text": "资讯分类管理",
+                            "tags": [
+                                "category"
+                            ],
+                            "nodes": null
+                        },
+                        {
+                            "text": "资讯管理",
+                            "tags": [
+                                "article"
+                            ],
+                            "nodes": null
+                        }
+                    ]
+                }
+            ]
+        }];
+        return data;
+    }
+    function getTree1(){
+        var defaultData = [
+        ];
+        $.ajax({
+            //请求方式
+            type : "GET",
+            //请求的媒体类型
+            contentType: "application/x-www-form-urlencoded",
+            async: false,
+            //请求地址
+            url : "http://127.0.0.1:8095/authority/getAuthorityTree",
+            //数据，json字符串
+//            data : list,
+            //请求成功
+            success : function(result) {
+                console.log(result);
+
+                var code = result.code;
+                var msg = result.msg;
+                if(code === 1000){
+
+                    defaultData.push(result.data);
+                    console.log(defaultData);
+
+                }else{
+                    alert(msg);
+                    console.log(msg);
+                }
+
+
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
+        return defaultData;
+    }
     function dataLoad() {
         $.ajax({
             //请求方式
@@ -636,68 +783,14 @@
                 console.log(e.responseText);
             }
         });
+
     };
     $(function(){
-
         dataLoad();
-        var defaultData = [
-            {
-                text: 'Parent 1',
-                href: '#parent1',
-                tags: ['4'],
-                nodes: [
-                    {
-                        text: 'Child 1',
-                        href: '#child1',
-                        tags: ['2'],
-                        nodes: [
-                            {
-                                text: 'Grandchild 1',
-                                href: '#grandchild1',
-                                tags: ['0']
-                            },
-                            {
-                                text: 'Grandchild 2',
-                                href: '#grandchild2',
-                                tags: ['0']
-                            }
-                        ]
-                    },
-                    {
-                        text: 'Child 2',
-                        href: '#child2',
-                        tags: ['0']
-                    }
-                ]
-            },
-            {
-                text: 'Parent 2',
-                href: '#parent2',
-                tags: ['0']
-            },
-            {
-                text: 'Parent 3',
-                href: '#parent3',
-                tags: ['0']
-            },
-            {
-                text: 'Parent 4',
-                href: '#parent4',
-                tags: ['0']
-            },
-            {
-                text: 'Parent 5',
-                href: '#parent5'  ,
-                tags: ['0']
-            }
-        ];
 
-//        $('#treeview1').treeview({
-//            data: defaultData,
-//            showCheckbox:true
-//        });
-        var $checkableTree = $('#treeview-checkable').treeview({
-            data: defaultData,
+
+        $checkableTree = $('#treeview-checkable').treeview({
+            data: getTree1(),
             showIcon: false,
             showCheckbox: true,
             multiSelect:false,
@@ -733,6 +826,15 @@
 
             }
         });
+
+
+
+
+//        $('#treeview1').treeview({
+//            data: defaultData,
+//            showCheckbox:true
+//        });
+
 
         var getChildNodeIdArr = function(node) {
             var ts = [];
