@@ -817,6 +817,21 @@
             }
             return tags;
         };
+        var checkedNodesTagsUpdate = function(){
+            var tags = [];
+            var nodes = $checkableTreeUpate.treeview('getChecked');
+            if(nodes&&nodes.length>0){
+                for (var idx = 0; idx < nodes.length; idx++) {
+                    var node = nodes[idx];
+                    var tag = node.tags;
+                    tags.push(tag[0]);
+                }
+
+            }else{
+                alert("请选择角色权限");
+            }
+            return tags;
+        };
         //todo 添加角色
         var addRole = function (){
             var roleName = $("#roleName").val();
@@ -861,7 +876,51 @@
                 }
             });
         };
+        var updateRole = function (){
+            var roleName = $("#roleNameUpdate").val();
+            var roleId = $("#updateFormId").val();
+            var roleDesc = $("#roleDescUpdate").val();
+            var checkedTags = checkedNodesTagsUpdate();
+            var checkedTagsStr = checkedTags.join(",");
+            $.ajax({
+                //请求方式
+                type : "PUT",
+                //请求的媒体类型
+                contentType: "application/x-www-form-urlencoded",
+                async: false,
+                //请求地址
+                url : "http://127.0.0.1:8095/role/put",
+                //数据，json字符串
+                data : {
+                    roleId:roleId,
+                    roleName:roleName,
+                    roleDesc:roleDesc,
+                    checkedTags:checkedTagsStr
+                },
+                //请求成功
+                success : function(result) {
+                    console.log(result);
 
+                    var code = result.code;
+                    var msg = result.msg;
+                    if(code === 1000){
+                        alert('操作成功');
+                        dataLoad();
+                        $("#updateModal").modal('hide');
+                    }else{
+                        alert(msg);
+                        console.log(msg);
+                    }
+
+
+                },
+                //请求失败，包含具体的错误信息
+                error : function(e){
+                    console.log(e.status);
+                    console.log(e.responseText);
+                }
+            });
+        };
 
 //        $("#myModal1").modal('show');  //手动开启
 
@@ -870,6 +929,12 @@
         $('#btn-add-role').on('click',function (e) {
             $('#btn-add-role').prop('disabled', true);
             addRole();
+        });
+
+        //todo 点击修改角色按钮
+        $("#btn-update-role").on('click',function(e){
+            $('#btn-update-role').prop('disabled', true);
+            updateRole();
         });
 
         //todo 添加角色框监听打开关闭时间
