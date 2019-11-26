@@ -452,7 +452,14 @@
         });
         return defaultData;
     }
-    function dataLoad() {
+    function dataLoad(q) {
+
+        var queryRoleName = q;
+
+        if(queryRoleName===''){
+//                alert("all");
+            queryRoleName = 'all';
+        }
         document.getElementById("tb").innerHTML="";
         $.ajax({
             //请求方式
@@ -460,9 +467,12 @@
             //请求的媒体类型
             contentType: "application/x-www-form-urlencoded",
             //请求地址
-            url : "http://127.0.0.1:8095/role/findAll",
+            url : "http://127.0.0.1:8095/role/query/"+queryRoleName,
             //数据，json字符串
-//            data : list,
+            data : {
+                pageSize:5,
+                pageNum:1
+            },
             //请求成功
             success : function(result) {
                 console.log(result);
@@ -482,15 +492,15 @@
 
                         var num = i+1;
                         h += "<tr>";
-                            h += "<td>" + id + "</td>";
-                            h += "<td>" + name + "</td>";
-                            h += "<td></td>";
-                            h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"updateFormId("+id+")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
-                                "<button type=\"button\" class=\"btn btn-primary\" onclick=\"deleteRole("+id+")\" >删除</button></td>";
+                        h += "<td>" + id + "</td>";
+                        h += "<td>" + name + "</td>";
+                        h += "<td></td>";
+                        h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"updateFormId("+id+")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
+                            "<button type=\"button\" class=\"btn btn-primary\" onclick=\"deleteRole("+id+")\" >删除</button></td>";
                         h += "</tr>";
                     }
 
-                document.getElementById("tb").innerHTML=h;
+                    document.getElementById("tb").innerHTML=h;
                 }else{
                     alert(msg);
                     console.log(msg);
@@ -504,7 +514,6 @@
                 console.log(e.responseText);
             }
         });
-
     };
     function deleteRole(id){
         $.ajax({
@@ -527,7 +536,7 @@
                 var msg = result.msg;
                 if(code === 1000){
                     alert('操作成功');
-                    dataLoad();
+                    dataLoad('');
                 }else{
                     alert(msg);
                     console.log(msg);
@@ -663,7 +672,7 @@
 
     $(function(){
         //todo 加载角色数据
-        dataLoad();
+        dataLoad('');
         //todo 初始化权限树
 
         $checkableTreeUpate = $('#treeview-checkable-update').treeview({
@@ -895,7 +904,7 @@
                     var msg = result.msg;
                     if(code === 1000){
                         alert('操作成功');
-                        dataLoad();
+                        dataLoad('');
                         $("#myModal").modal('hide');
                     }else{
                         alert(msg);
@@ -940,7 +949,7 @@
                     var msg = result.msg;
                     if(code === 1000){
                         alert('操作成功');
-                        dataLoad();
+                        dataLoad('');
                         $("#updateModal").modal('hide');
                     }else{
                         alert(msg);
@@ -965,64 +974,10 @@
             $('#btn-add-role').prop('disabled', true);
             addRole();
         });
-
+        //todo 搜索按钮
         $("#btn-query-roleName").on('click',function (e) {
             var queryRoleName = $("#queryRoleName").val();
-            if(queryRoleName===''){
-//                alert("all");
-                queryRoleName = 'all';
-            }
-            document.getElementById("tb").innerHTML="";
-            $.ajax({
-                //请求方式
-                type : "GET",
-                //请求的媒体类型
-                contentType: "application/x-www-form-urlencoded",
-                //请求地址
-                url : "http://127.0.0.1:8095/role/query/"+queryRoleName,
-                //数据，json字符串
-//            data : list,
-                //请求成功
-                success : function(result) {
-                    console.log(result);
-
-                    var code = result.code;
-                    var msg = result.msg;
-                    if(code === 1000){
-                        var tableData = result.data;
-                        var h="";
-                        for(var i=0;i<tableData.length;i++) {
-                            var dataObj = tableData[i];
-
-                            console.log("id:"+ dataObj.id);
-                            console.log("name:"+dataObj.name);
-                            var id = dataObj.id;
-                            var name = dataObj.name;
-
-                            var num = i+1;
-                            h += "<tr>";
-                            h += "<td>" + id + "</td>";
-                            h += "<td>" + name + "</td>";
-                            h += "<td></td>";
-                            h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"updateFormId("+id+")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
-                                "<button type=\"button\" class=\"btn btn-primary\" onclick=\"deleteRole("+id+")\" >删除</button></td>";
-                            h += "</tr>";
-                        }
-
-                        document.getElementById("tb").innerHTML=h;
-                    }else{
-                        alert(msg);
-                        console.log(msg);
-                    }
-
-
-                },
-                //请求失败，包含具体的错误信息
-                error : function(e){
-                    console.log(e.status);
-                    console.log(e.responseText);
-                }
-            });
+            dataLoad(queryRoleName);
         });
 
         //todo 点击修改角色按钮
