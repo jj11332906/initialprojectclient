@@ -244,7 +244,7 @@
 
     <!-- Mainbar ends -->
     <div class="clearfix"></div>
-    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -300,14 +300,14 @@
 
 
 
-    <div id="updateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="updateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  style="height:600px" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" >
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title">修改角色信息</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" >
                     <hr />
                     <!-- Form starts.  -->
                     <form class="form-horizontal" role="form" id="updateForm">
@@ -508,6 +508,11 @@
     };
 
     function updateFormId(id){
+        $checkableTreeUpate.treeview('uncheckAll', { silent: $('#chk-check-silent').is(':checked') });
+        $("#roleNameUpdate").val('');
+        $("#updateFormId").val('');
+        $("#roleDescUpdate").val('');
+        $("#btn-add-role").prop("disabled", false);
         $("#updateFormId").val(id);
         console.log(id);
         $.ajax({
@@ -881,6 +886,8 @@
             $("#roleName").val('');
             $("#roleDesc").val('');
         });
+
+
         /*
                 $('#btn-check-node.check-node').on('click', function (e) {
                     $checkableTree.treeview('checkNode', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
