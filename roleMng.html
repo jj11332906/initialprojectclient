@@ -174,12 +174,12 @@
                                         <form class="form-horizontal">
                                             <!-- Title -->
                                             <div class="form-group">
-                                                <label class="control-label col-lg-6" for="title">角色名称</label>
+                                                <label class="control-label col-lg-6" for="queryRoleName">角色名称</label>
                                                 <div class="col-lg-6">
-                                                    <input type="text" class="form-control" id="title">
+                                                    <input type="text" class="form-control" id="queryRoleName">
                                                 </div>
                                                 <div class="col-lg-3">
-                                                    <button type="button" class="btn btn-success">搜索</button>
+                                                    <button type="button" class="btn btn-success" id="btn-query-roleName">搜索</button>
                                                     <!--<button type="button" class="btn btn-danger">新增</button>-->
                                                     <a href="#myModal" class="btn btn-info" data-toggle="modal">新增</a>
                                                 </div>
@@ -486,7 +486,7 @@
                             h += "<td>" + name + "</td>";
                             h += "<td></td>";
                             h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"updateFormId("+id+")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
-                                "<button type=\"button\" class=\"btn btn-primary\">删除</button></td>";
+                                "<button type=\"button\" class=\"btn btn-primary\" onclick=\"deleteRole("+id+")\" >删除</button></td>";
                         h += "</tr>";
                     }
 
@@ -506,7 +506,42 @@
         });
 
     };
+    function deleteRole(id){
+        $.ajax({
+            //请求方式
+            type : "PUT",
+            //请求的媒体类型
+            contentType: "application/x-www-form-urlencoded",
+            async: false,
+            //请求地址
+            url : "http://127.0.0.1:8095/role/deleteRole",
+            //数据，json字符串
+            data : {
+                roleId:id
+            },
+            //请求成功
+            success : function(result) {
+                console.log(result);
 
+                var code = result.code;
+                var msg = result.msg;
+                if(code === 1000){
+                    alert('操作成功');
+                    dataLoad();
+                }else{
+                    alert(msg);
+                    console.log(msg);
+                }
+
+
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
+    };
     function updateFormId(id){
         $checkableTreeUpate.treeview('uncheckAll', { silent: $('#chk-check-silent').is(':checked') });
         $("#roleNameUpdate").val('');
@@ -929,6 +964,65 @@
         $('#btn-add-role').on('click',function (e) {
             $('#btn-add-role').prop('disabled', true);
             addRole();
+        });
+
+        $("#btn-query-roleName").on('click',function (e) {
+            var queryRoleName = $("#queryRoleName").val();
+            if(queryRoleName===''){
+//                alert("all");
+                queryRoleName = 'all';
+            }
+            document.getElementById("tb").innerHTML="";
+            $.ajax({
+                //请求方式
+                type : "GET",
+                //请求的媒体类型
+                contentType: "application/x-www-form-urlencoded",
+                //请求地址
+                url : "http://127.0.0.1:8095/role/query/"+queryRoleName,
+                //数据，json字符串
+//            data : list,
+                //请求成功
+                success : function(result) {
+                    console.log(result);
+
+                    var code = result.code;
+                    var msg = result.msg;
+                    if(code === 1000){
+                        var tableData = result.data;
+                        var h="";
+                        for(var i=0;i<tableData.length;i++) {
+                            var dataObj = tableData[i];
+
+                            console.log("id:"+ dataObj.id);
+                            console.log("name:"+dataObj.name);
+                            var id = dataObj.id;
+                            var name = dataObj.name;
+
+                            var num = i+1;
+                            h += "<tr>";
+                            h += "<td>" + id + "</td>";
+                            h += "<td>" + name + "</td>";
+                            h += "<td></td>";
+                            h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"updateFormId("+id+")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
+                                "<button type=\"button\" class=\"btn btn-primary\" onclick=\"deleteRole("+id+")\" >删除</button></td>";
+                            h += "</tr>";
+                        }
+
+                        document.getElementById("tb").innerHTML=h;
+                    }else{
+                        alert(msg);
+                        console.log(msg);
+                    }
+
+
+                },
+                //请求失败，包含具体的错误信息
+                error : function(e){
+                    console.log(e.status);
+                    console.log(e.responseText);
+                }
+            });
         });
 
         //todo 点击修改角色按钮
