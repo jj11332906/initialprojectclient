@@ -25,8 +25,6 @@
     <link rel="stylesheet" href="style/bootstrap-datetimepicker.min.css">
     <!-- CLEditor -->
     <link rel="stylesheet" href="style/jquery.cleditor.css">
-    <!-- Uniform -->
-    <link rel="stylesheet" href="style/uniform.default.css">
     <!-- Bootstrap toggle -->
     <link rel="stylesheet" href="style/bootstrap-switch.css">
     <!-- Main stylesheet -->
@@ -299,6 +297,66 @@
             </div>
         </div>
     </div>
+
+
+
+    <div id="updateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">修改角色信息</h4>
+                </div>
+                <div class="modal-body">
+                    <hr />
+                    <!-- Form starts.  -->
+                    <form class="form-horizontal" role="form" id="updateForm">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">角色ID</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" placeholder="ID" id="updateFormId" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">角色名称</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" placeholder="名称" id="roleNameUpdate">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">角色描述</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" rows="3" placeholder="描述" id="roleDescUpdate"></textarea>
+                            </div>
+                        </div>
+
+                    </form>
+                    <hr />
+                    <!--
+                                            <div class="col-sm-12">
+                                                <br/>
+                                                <h4>权限设置</h4>
+                                                <div id="treeview1" class=""></div>
+                                            </div>-->
+                    <hr />
+                    <div class="col-sm-12">
+                        <br/>
+                        <br/>
+                        <h4>权限</h4>
+                        <div id="treeview-checkable-update"></div>
+                    </div>
+                    <hr />
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+                    <button type="button" class="btn btn-primary" id="btn-update-role">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- Content ends -->
 
@@ -345,7 +403,6 @@
 <script src="js/sparklines.js"></script> <!-- Sparklines -->
 <script src="js/jquery.cleditor.min.js"></script> <!-- CLEditor -->
 <script src="js/bootstrap-datetimepicker.min.js"></script> <!-- Date picker -->
-<script src="js/jquery.uniform.min.js"></script> <!-- jQuery Uniform -->
 <script src="js/bootstrap-switch.min.js"></script> <!-- Bootstrap Toggle -->
 <script src="js/filter.js"></script> <!-- Filter for support page -->
 <script src="js/custom.js"></script> <!-- Custom codes -->
@@ -354,7 +411,7 @@
 <script>
 
     var $checkableTree;
-
+    var $checkableTreeUpate;
 
     function getTree(){
         var defaultData = [
@@ -428,7 +485,7 @@
                             h += "<td>" + id + "</td>";
                             h += "<td>" + name + "</td>";
                             h += "<td></td>";
-                            h += "<td><button type=\"button\" class=\"btn btn-primary\">编辑</button>" +
+                            h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"updateFormId("+id+")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
                                 "<button type=\"button\" class=\"btn btn-primary\">删除</button></td>";
                         h += "</tr>";
                     }
@@ -449,10 +506,164 @@
         });
 
     };
+
+    function updateFormId(id){
+        $("#updateFormId").val(id);
+        console.log(id);
+        $.ajax({
+            //请求方式
+            type : "GET",
+            //请求的媒体类型
+            contentType: "application/x-www-form-urlencoded",
+            //请求地址
+            url : "http://127.0.0.1:8095/role/find/"+id,
+            //数据，json字符串
+//            data : list,
+            //请求成功
+            success : function(result) {
+                console.log(result);
+
+                var code = result.code;
+                var msg = result.msg;
+                if(code === 1000){
+                    var roleInfo = result.data;
+                    var h="";
+
+                        console.log("id:"+ roleInfo.id);
+                        console.log("name:"+roleInfo.name);
+                        var name = roleInfo.name;
+                        $("#roleNameUpdate").val(name);
+                        var authorityDTOS = roleInfo.authorityDTOS;
+                        var rootNode = $checkableTreeUpate.treeview('getNode', 0);
+                        ergodic(rootNode,authorityDTOS);
+
+
+                }else{
+                    alert(msg);
+                    console.log(msg);
+                }
+
+
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
+    };
+
+    function ergodic(rootNode,authorityDTOS){
+
+        for(var i=0;i<authorityDTOS.length;i++){
+            var tags = rootNode.tags;
+            var authorityDto = authorityDTOS[i];
+            var authority = authorityDto.authority;
+            var tag = tags[0];
+            if(authority === tag){
+//                console.log("该节点需要check");
+                $checkableTreeUpate.treeview('checkNode', [ rootNode.nodeId, { silent: true } ]);
+                break;
+            }else{
+//                console.log("该节点不需要check");
+            }
+        }
+
+        var childrenNodes =  getChildrenNodeIds(rootNode);
+//        console.log(childrenNodes);
+        for(var i=0;i<childrenNodes.length;i++){
+            var nodeId = childrenNodes[i];
+            var node = $checkableTreeUpate.treeview('getNode', nodeId);
+            var tags = node.tags;
+
+            var tag = tags[0];
+
+            for(var j=0;j<authorityDTOS.length;j++){
+
+                var authorityDto = authorityDTOS[j];
+                var authority = authorityDto.authority;
+
+                if(authority === tag){
+//                    console.log("该节点需要check");
+                    $checkableTreeUpate.treeview('checkNode', [ nodeId ]);
+                    break;
+                }else{
+//                    console.log("该节点不需要check");
+                }
+            }
+
+//            console.log(authority+","+tag);
+//            if(authority === tag){
+//                console.log("该节点需要check");
+//                $checkableTreeUpate.treeview('checkNode', [ nodeId ]);
+//            }else{
+//                console.log("该节点不需要check");
+//            }
+        }
+
+    }
+
+    function getChildrenNodeIds(node) {
+        var ts = [];
+        if(node.nodes) {
+            for(x in node.nodes) {
+                ts.push(node.nodes[x].nodeId);
+                if(node.nodes[x].nodes) {
+                    var getNodeDieDai = getChildrenNodeIds(node.nodes[x]);//有第二层，第三层子节点的情况
+                    for(j in getNodeDieDai) {
+                        ts.push(getNodeDieDai[j]);
+                    }
+                }
+            }
+        } else {
+            ts.push(node.nodeId);
+        }
+        return ts;
+    };
+
     $(function(){
         //todo 加载角色数据
         dataLoad();
         //todo 初始化权限树
+
+        $checkableTreeUpate = $('#treeview-checkable-update').treeview({
+            data: getTree(),
+            showIcon: false,
+            showCheckbox: true,
+            multiSelect:false,
+            onNodeChecked: function(event, node) {
+//                $('#checkable-output').prepend('<p>' + node.text + ' was checked</p>');
+                var selectNodes= getChildNodeIdArr(node);//获取所有节点
+                if(selectNodes){//如果子节点不为空，即存在子节点，则选中所有子节点
+                    //选择指定的节点，接收节点或节点ID
+                    $checkableTreeUpate.treeview('checkNode',[selectNodes,{silent:true}])
+                }
+                //返回给定节点ID的单一节点对象
+                setParentNodeCheckUpdate(node);
+            },
+            onNodeUnchecked: function (event, node) {
+//                $('#checkable-output').prepend('<p>' + node.text + ' was unchecked</p>');
+                var selectNodes=getChildNodeIdArr(node);
+                if(selectNodes){//子节点不为空，则取消选中所有子节点
+                    $checkableTreeUpate.treeview("uncheckNode",[selectNodes,{silent:true}]);
+                }
+                if(node.parentId!==undefined) {
+                    var parentNode = $checkableTreeUpate.treeview("getNode", node.parentId);
+                    var uncheckNodes = getParentNodeIdArrUpdate(parentNode);
+
+                    console.info(uncheckNodes);
+                    for (var idx = 0; idx < uncheckNodes.length; idx++) {
+                        var nodeId = uncheckNodes[idx];
+                        var uncheckNode = $checkableTreeUpate.treeview('getNode', nodeId);
+                        if (uncheckNode.state.checked === true) {
+                            $checkableTreeUpate.treeview('uncheckNode', [uncheckNode, {silent: true}])
+                        }
+                    }
+                }
+
+            }
+        });
+        $checkableTreeUpate.treeview('expandAll', { levels: 2, silent: true });
         $checkableTree = $('#treeview-checkable').treeview({
             data: getTree(),
             showIcon: false,
@@ -508,6 +719,19 @@
             }
             return ts;
         };
+        var getParentNodeIdArrUpdate = function(node) {
+            console.info(node);
+            var ts = [];
+            ts.push(node.nodeId);
+            if(node.nodeId!==0){
+                var parentNode = $checkableTreeUpate.treeview("getNode", node.parentId);
+                var getNodeDieDai = getParentNodeIdArr(parentNode);
+                for(j in getNodeDieDai) {
+                    ts.push(getNodeDieDai[j]);
+                }
+            }
+            return ts;
+        };
         var getParentNodeIdArr = function(node) {
             console.info(node);
             var ts = [];
@@ -520,6 +744,23 @@
                 }
             }
             return ts;
+        };
+        var setParentNodeCheckUpdate = function(node) {
+            var parentNode = $checkableTreeUpate.treeview("getNode", node.parentId);
+            if(parentNode.nodes) {
+                var checkedCount = 0;
+                for(x in parentNode.nodes) {
+                    if(parentNode.nodes[x].state.checked) {
+                        checkedCount++;
+                    } else {
+                        break;
+                    }
+                }
+                if(checkedCount === parentNode.nodes.length) {
+                    $checkableTreeUpate.treeview("checkNode", parentNode.nodeId);
+                    setParentNodeCheck(parentNode);
+                }
+            }
         };
         var setParentNodeCheck = function(node) {
             var parentNode = $checkableTree.treeview("getNode", node.parentId);
