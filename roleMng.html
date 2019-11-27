@@ -171,7 +171,7 @@
 
                                     <div class="form quick-post">
                                         <!-- Edit profile form (not working)-->
-                                        <form class="form-horizontal">
+                                        <form class="form-horizontal" id="queryForm">
                                             <!-- Title -->
                                             <div class="form-group">
                                                 <label class="control-label col-lg-6" for="queryRoleName">角色名称</label>
@@ -219,13 +219,8 @@
                             <div class="widget-foot">
 
 
-                                <ul class="pagination pull-right">
-                                    <li><a href="#">Prev</a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">Next</a></li>
+                                <ul class="pagination pull-right" id="paginationComponent">
+
                                 </ul>
 
                                 <div class="clearfix"></div>
@@ -289,7 +284,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="btn-check-all">获取选中的权限</button>
+                    <button type="button" class="btn btn-danger" id="btn-check-all">reloadPagination</button>
 
                     <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
                     <button type="button" class="btn btn-primary" id="btn-add-role">保存</button>
@@ -408,10 +403,15 @@
 <script src="js/custom.js"></script> <!-- Custom codes -->
 <script src="js/charts.js"></script> <!-- Charts & Graphs -->
 <script src="js/bootstrap-treeview.js"></script> <!-- Bootstrap -->
+
+<script src="js/util/pagenationJs.js"></script> <!-- Bootstrap -->
 <script>
 
     var $checkableTree;
     var $checkableTreeUpate;
+    var pageNum=1;
+    var pageSize=5;
+    var $paginationComponent;
 
     function getTree(){
         var defaultData = [
@@ -428,14 +428,14 @@
 //            data : list,
             //请求成功
             success : function(result) {
-                console.log(result);
+
 
                 var code = result.code;
                 var msg = result.msg;
                 if(code === 1000){
 
                     defaultData.push(result.data);
-                    console.log(defaultData);
+
 
                 }else{
                     alert(msg);
@@ -454,12 +454,12 @@
     }
     function dataLoad(q) {
 
-        var queryRoleName = q;
 
-        if(queryRoleName===''){
-//                alert("all");
-            queryRoleName = 'all';
+        var url="http://127.0.0.1:8095/role/query";
+        if(q!==''){
+            url+='?'+q;
         }
+
         document.getElementById("tb").innerHTML="";
         $.ajax({
             //请求方式
@@ -467,15 +467,14 @@
             //请求的媒体类型
             contentType: "application/x-www-form-urlencoded",
             //请求地址
-            url : "http://127.0.0.1:8095/role/query/"+queryRoleName,
+            url : url,
             //数据，json字符串
             data : {
-                pageSize:5,
-                pageNum:1
+                pageSize:pageSize,
+                pageNum:pageNum
             },
             //请求成功
             success : function(result) {
-                console.log(result);
 
                 var code = result.code;
                 var msg = result.msg;
@@ -485,12 +484,10 @@
                     for(var i=0;i<tableData.length;i++) {
                         var dataObj = tableData[i];
 
-                        console.log("id:"+ dataObj.id);
-                        console.log("name:"+dataObj.name);
                         var id = dataObj.id;
                         var name = dataObj.name;
 
-                        var num = i+1;
+//                        var num = i+1;
                         h += "<tr>";
                         h += "<td>" + id + "</td>";
                         h += "<td>" + name + "</td>";
@@ -530,13 +527,14 @@
             },
             //请求成功
             success : function(result) {
-                console.log(result);
+
 
                 var code = result.code;
                 var msg = result.msg;
                 if(code === 1000){
                     alert('操作成功');
                     dataLoad('');
+                    $paginationComponent.reload()
                 }else{
                     alert(msg);
                     console.log(msg);
@@ -558,7 +556,7 @@
         $("#roleDescUpdate").val('');
         $("#btn-add-role").prop("disabled", false);
         $("#updateFormId").val(id);
-        console.log(id);
+
         $.ajax({
             //请求方式
             type : "GET",
@@ -570,7 +568,6 @@
 //            data : list,
             //请求成功
             success : function(result) {
-                console.log(result);
 
                 var code = result.code;
                 var msg = result.msg;
@@ -578,8 +575,7 @@
                     var roleInfo = result.data;
                     var h="";
 
-                        console.log("id:"+ roleInfo.id);
-                        console.log("name:"+roleInfo.name);
+
                         var name = roleInfo.name;
                         $("#roleNameUpdate").val(name);
                         var authorityDTOS = roleInfo.authorityDTOS;
@@ -669,8 +665,84 @@
         }
         return ts;
     };
+/*
+    function initPagination(q){
+        document.getElementById("paginationComponent").innerHTML='';
+        console.log(q);
+
+        var url="http://127.0.0.1:8095/role/totalPage";
+        if(q!==''){
+            url+='?'+q;
+        }
+
+
+
+        $.ajax({
+            //请求方式
+            type : "GET",
+            //请求的媒体类型
+            contentType: "application/x-www-form-urlencoded",
+            //请求地址
+            url : url,
+            //数据，json字符串
+            data : {
+                pageSize:pageSize
+            },
+            async: false,
+            //请求成功
+            success : function(result) {
+                console.log(result);
+
+                var code = result.code;
+                var msg = result.msg;
+                if(code === 1000){
+                    var allNum = result.data;
+                    $paginationComponent = new page(
+                        {
+                            id:'paginationComponent',
+                            nowNum:1,
+                            allNum:allNum,
+                            dataMethod:'dataLoad',
+                            queryForm:['queryRoleName'],
+                            callback:function(now,all){
+                                pageNum=now;
+                            }
+                        }
+                    );
+
+                }else{
+                    alert(msg);
+                    console.log(msg);
+                }
+
+
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
+
+    }*/
 
     $(function(){
+        //todo 初始化分页组件
+//        initPagination('');
+        $paginationComponent = new page(
+            {
+                id:'paginationComponent',
+                nowNum:1,
+                allNumUrl:"http://127.0.0.1:8095/role/totalPage",
+                isParam:false,
+                pageSize:pageSize,
+                dataMethod:'dataLoad',
+                queryForm:['queryRoleName'],
+                callback:function(now,all){
+                    pageNum=now;
+                }
+            }
+        );
         //todo 加载角色数据
         dataLoad('');
         //todo 初始化权限树
@@ -842,8 +914,9 @@
             return $checkableTree.treeview('getChecked');
         };
         $('#btn-check-all').on('click', function (e) {
-            var checkedTags = checkedNodesTags();
-            console.log(checkedTags);
+            $paginationComponent.reload();
+//            var checkedTags = checkedNodesTags();
+//            console.log(checkedTags);
         });
         //todo 获取复选框选中的权限tags
         var checkedNodesTags = function(){
@@ -898,13 +971,14 @@
                 },
                 //请求成功
                 success : function(result) {
-                    console.log(result);
+
 
                     var code = result.code;
                     var msg = result.msg;
                     if(code === 1000){
                         alert('操作成功');
                         dataLoad('');
+                        $paginationComponent.reload();
                         $("#myModal").modal('hide');
                     }else{
                         alert(msg);
@@ -943,7 +1017,7 @@
                 },
                 //请求成功
                 success : function(result) {
-                    console.log(result);
+//                    console.log(result);
 
                     var code = result.code;
                     var msg = result.msg;
@@ -977,7 +1051,15 @@
         //todo 搜索按钮
         $("#btn-query-roleName").on('click',function (e) {
             var queryRoleName = $("#queryRoleName").val();
-            dataLoad(queryRoleName);
+            var q = "queryRoleName="+queryRoleName;
+            if(queryRoleName===''||queryRoleName===null){
+                $paginationComponent.init(false);
+            }else{
+                $paginationComponent.init(true);
+            }
+
+//            initPagination(q);
+            dataLoad(q);
         });
 
         //todo 点击修改角色按钮

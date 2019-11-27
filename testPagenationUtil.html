@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style type="text/css">
+        a{
+            margin: 5px;
+        }
+    </style>
+    <title>分页</title>
+    <script type="text/javascript">
+        window.onload=function(){
+            new page(
+                {id:'div1',
+                    nowNum:5,
+                    allNum:8,
+                    callback:function(now,all){
+                        alert('当前页：'+now+','+'总共'+all+'页')
+                    }
+                }
+            )
+        }
+
+        function page(json){
+            this.json=json;
+
+            if(!this.json.id){
+                return false
+            }
+            this.obj=null;
+            this.nowNum=null;
+            this.allNum=null;
+            this.callback=null;
+
+            var _this=this;
+            this.obj=document.getElementById(this.json.id);
+            this.nowNum=this.json.nowNum||1;
+            this.allNum=this.json.allNum||5;
+            this.callback=this.json.callback||function(){};
+
+            if(this.nowNum >3 && this.allNum >5){
+                var oA=null;
+
+                this.oA=document.createElement('a');
+                this.oA.href="#"+1;
+                this.oA.innerHTML="首页";
+                this.obj.appendChild(this.oA)
+            }
+            if(this.nowNum>1){
+                var oA=null;
+
+                this.oA=document.createElement('a');
+                this.oA.href="#"+(this.nowNum-1);
+                this.oA.innerHTML="上一页";
+                this.obj.appendChild(this.oA)
+            }
+
+
+
+            if(this.allNum<=5){
+                for(var i=0;i<this.allNum;i++){
+                    var oA=null;
+                    this.oA=document.createElement('a');
+
+                    this.oA.href='#'+(i+1);
+
+                    if(this.nowNum==(i+1)){
+                        this.oA.innerHTML=(i+1);
+                    }else{
+                        this.oA.innerHTML='['+ (i+1) +']';
+                    }
+                    this.obj.appendChild(this.oA);
+
+                }
+            }else{
+
+                for(var i=1;i<=5;i++){
+                    var oA=null;
+                    this.oA=document.createElement('a');
+
+                    if(this.nowNum==1||this.nowNum==2){
+                        this.oA.href='#'+i;
+                        this.oA.innerHTML='['+i+']';
+
+                        if(this.nowNum==i){
+                            this.oA.innerHTML=i
+                        }
+                    }else if((this.allNum - this.nowNum) == 0||(this.allNum - this.nowNum == 1)){
+
+                        this.oA.href='#'+(this.allNum-5+i);
+                        if(this.allNum - this.nowNum==0 && i==5){
+                            this.oA.innerHTML=(this.allNum-5+i);
+                        }else if(this.allNum - this.nowNum==1 && i==4){
+                            this.oA.innerHTML=(this.allNum-5+i);
+                        }else{
+                            this.oA.innerHTML='['+(this.allNum-5+i)+']';
+                        }
+
+
+                    }else{
+                        this.oA.href = '#' + (this.nowNum - 3 + i);
+
+                        if(i==3){
+                            this.oA.innerHTML=(this.nowNum-3+i);
+                        }else{
+                            this.oA.innerHTML='['+(this.nowNum-3+i)+']';
+                        }
+
+                    }
+                    this.obj.appendChild(this.oA);
+
+                }
+            }
+
+            if((this.allNum - this.nowNum) > 0){
+                var oA=null;
+                this.oA=document.createElement('a');
+                this.oA.href='#'+(this.nowNum+1);
+                this.oA.innerHTML = '下一页';
+                this.obj.appendChild(this.oA);
+            }
+            if((this.allNum - this.nowNum)>2){
+                var oA=null;
+                this.oA=document.createElement('a');
+                this.oA.href='#'+this.allNum;
+                this.oA.innerHTML = '尾页'
+                this.obj.appendChild(this.oA);
+            }
+            this.callback(this.nowNum,this.allNum);
+
+
+
+            var aA=null;
+
+            this.aA=this.obj.getElementsByTagName('a');
+            for(var i=0;i<this.aA.length;i++){
+
+                var _this=this;
+
+                this.aA[i].onclick=function(){
+                    _this.change(this);
+                };
+
+            }
+        }
+        page.prototype.change=function(btn){
+
+            var nowNum=null;
+
+
+            this.nowNum = parseInt(btn.getAttribute('href').substring(1));
+
+            this.obj.innerHTML='';
+
+            new page(
+                {
+                    id:    this.json.id,
+                    nowNum:this.nowNum,
+                    allNum:this.allNum,
+                    callback: this.callback
+                }
+            );
+        }
+    </script>
+</head>
+<body>
+<div id="div1">
+    <!-- <a href="#1">1</a>
+    <a href="#1">2</a>
+    <a href="#1">3</a>
+    <a href="#1">4</a>
+    <a href="#1">5</a> -->
+</div>
+</body>
+</html>
