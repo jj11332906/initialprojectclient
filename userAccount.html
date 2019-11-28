@@ -93,14 +93,6 @@
 </div>
 
 
-<!-- Header starts -->
-<header>
-    <div class="container">
-
-    </div>
-</header>
-
-<!-- Header ends -->
 
 <!-- Main content starts -->
 
@@ -127,7 +119,7 @@
                 <ul>
                     <li><a href="authorityMng.html">权限管理</a></li>
                     <li><a href="widgets2.html">菜单管理</a></li>
-                    <li><a href="widgets2.html">账号管理</a></li>
+                    <li><a href="userAccount.html">账号管理</a></li>
                     <li><a href="roleMng.html">角色管理</a></li>
                 </ul>
             </li>
@@ -135,7 +127,6 @@
             <li><a href="forms.html"><i class="icon-tasks"></i>表单</a></li>
         </ul>
     </div>
-
     <!-- Sidebar ends -->
 
     <!-- Main bar -->
@@ -161,16 +152,16 @@
                                         <form class="form-horizontal" id="queryForm">
                                             <!-- Title -->
                                             <div class="form-group">
-                                                <label class="control-label col-lg-6" for="queryUserName">用户名</label>
+                                                <label class="control-label col-lg-6" for="queryName">用户名</label>
+                                                <div class="col-lg-3">
+                                                    <input type="text" class="form-control" id="queryName">
+                                                </div>
+                                                <label class="control-label col-lg-6" for="queryUserName">账号</label>
                                                 <div class="col-lg-3">
                                                     <input type="text" class="form-control" id="queryUserName">
                                                 </div>
-                                                <label class="control-label col-lg-6" for="queryUserAccount">账号</label>
                                                 <div class="col-lg-3">
-                                                    <input type="text" class="form-control" id="queryUserAccount">
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <button type="button" class="btn btn-success" id="btn-query-roleName">搜索</button>
+                                                    <button type="button" class="btn btn-success" id="btn-query">搜索</button>
                                                     <!--<button type="button" class="btn btn-danger">新增</button>-->
                                                     <a href="#myModal" class="btn btn-info" data-toggle="modal">新增</a>
                                                 </div>
@@ -235,50 +226,55 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">新增账号</h4>
+                    <h4 class="modal-title">编辑窗口</h4>
                 </div>
                 <div class="modal-body">
                     <hr />
                     <!-- Form starts.  -->
-                    <form class="form-horizontal" role="form" id="addForm">
-
+                    <form class="form-horizontal" role="form" id="userForm">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">用户ID</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" placeholder="用户ID" id="id" readonly="readonly">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">用户姓名</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control" placeholder="名称" id="roleName">
+                                <input type="text" class="form-control" placeholder="名称" id="name">
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">角色描述</label>
+                            <label class="col-lg-4 control-label">账号</label>
                             <div class="col-lg-8">
-                                <textarea class="form-control" rows="3" placeholder="描述" id="roleDesc"></textarea>
+                                <input type="text" class="form-control" placeholder="账号" id="username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">邮箱</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" placeholder="账号" id="email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">角色ID</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" placeholder="角色ID" id="roleId">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">备注</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" rows="3" placeholder="描述" id="describe"></textarea>
                             </div>
                         </div>
 
                     </form>
-                    <hr />
-<!--
-                        <div class="col-sm-12">
-                            <br/>
-                            <h4>权限设置</h4>
-                            <div id="treeview1" class=""></div>
-                        </div>-->
-                    <hr />
-                    <div class="col-sm-12">
-                        <br/>
-                        <br/>
-                        <h4>权限</h4>
-                        <div id="treeview-checkable"></div>
-                    </div>
-                    <hr />
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="btn-check-all">reloadPagination</button>
-
                     <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
-                    <button type="button" class="btn btn-primary" id="btn-add-role">保存</button>
+                    <button type="button" class="btn btn-primary" id="btn-save">保存</button>
                 </div>
             </div>
         </div>
