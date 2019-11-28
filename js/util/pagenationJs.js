@@ -43,6 +43,7 @@ function page(json) {
 
 
 }
+
 page.prototype.domControl = function (nowNum_dom,allNum_dom,obj_dom,pageObj) {
 
     if (nowNum_dom > 3 && allNum_dom> 5) {
@@ -255,9 +256,10 @@ page.prototype.init = function (isParam) {
         this.nowNum=this.allNum;
     }
 
-    this.callback(1, this.allNum);
+    this.nowNum = 1;
+    this.callback( this.nowNum this.allNum);
     //todo 开始控制dom
-    this.domControl(1,this.allNum,this.obj,this);
+    this.domControl( this.nowNum,this.allNum,this.obj,this);
 };
 
 page.prototype.getTotalPages = function (url, ps, isParam) {
