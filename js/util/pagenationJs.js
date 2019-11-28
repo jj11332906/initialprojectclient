@@ -257,7 +257,7 @@ page.prototype.init = function (isParam) {
     }
 
     this.nowNum = 1;
-    this.callback( this.nowNum this.allNum);
+    this.callback( this.nowNum,this.allNum);
     //todo 开始控制dom
     this.domControl( this.nowNum,this.allNum,this.obj,this);
 };
