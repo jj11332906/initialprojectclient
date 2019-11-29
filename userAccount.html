@@ -279,6 +279,7 @@
 
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="btn-test">测试</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
                     <button type="button" class="btn btn-primary" id="btn-save">保存</button>
                 </div>
@@ -301,7 +302,6 @@
     var pageNum = 1;
     var pageSize = 10;
     var $paginationComponent;
-
 
     function dataLoad(q) {
 
@@ -349,7 +349,7 @@
                         h += "<td>" + roleName + "</td>";
                         h += "<td>" + email + "</td>";
                         h += "<td>" + createDateStr + "</td>";
-                        h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"updateFormId(" + id + ")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
+                        h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"getSysUser(" + id + ")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
                             "<button type=\"button\" class=\"btn btn-primary\" onclick=\"deleteRole(" + id + ")\" >删除</button></td>";
                         h += "</tr>";
                     }
@@ -424,16 +424,34 @@
                 var code = result.code;
                 var msg = result.msg;
                 if (code === 1000) {
-                    var roleInfo = result.data;
-                    var h = "";
+                    var userInfo = result.data;
+                    var id = userInfo.id;
+                    var name = userInfo.name;
+                    var username = userInfo.username;
+                    var description = userInfo.description;
+                    var email = userInfo.email;
+                    var roleName = userInfo.roleName;
+                    var roleId = userInfo.roleId;
 
+                    $("#name").val(name);
+                    $("#id").val(id);
+                    $("#username").val(username);
+                    $("#email").val(email);
+                    $("#describe").val(description);
 
-                    var name = roleInfo.name;
-                    $("#roleNameUpdate").val(name);
-                    var authorityDTOS = roleInfo.authorityDTOS;
-                    var rootNode = $checkableTreeUpate.treeview('getNode', 0);
-                    ergodic(rootNode, authorityDTOS);
-
+                    console.log("roleId:"+roleId);
+                    //todo 很麻烦的bootstrap select 赋初值
+                    $("#roleSelect option").each(function () {
+                        var val = $(this).val();
+                        var text = $(this).text();
+                        $(this).removeAttr('selected',"selected");
+//                        console.log(val+"    --------       "+text);
+                        if(val == roleId){
+                            $(this).attr('selected',"selected");
+                            $("#roleSelectTextBox").val(roleName);
+                        }
+                    });
+                    $("#myModal").modal('show');
 
                 } else {
                     alert(msg);
@@ -497,6 +515,7 @@
             }
         });
     };
+
 
 
     $(function () {
@@ -650,6 +669,12 @@
 
 //            initPagination(q);
             dataLoad(q);
+        });
+
+        //todo 界面调试按钮,测试辅助
+        $("#btn-test").on('click',function (e){
+            var roleSelect = $("#roleSelect").val();
+            alert(roleSelect);
         });
 
         //todo 添加角色框监听打开关闭时间
