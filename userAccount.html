@@ -438,19 +438,10 @@
                     $("#username").val(username);
                     $("#email").val(email);
                     $("#describe").val(description);
-
+                    roleComboboxSetValue(roleId);
                     console.log("roleId:"+roleId);
                     //todo 很麻烦的bootstrap select 赋初值
-                    $("#roleSelect option").each(function () {
-                        var val = $(this).val();
-                        var text = $(this).text();
-                        $(this).removeAttr('selected',"selected");
-//                        console.log(val+"    --------       "+text);
-                        if(val == roleId){
-                            $(this).attr('selected',"selected");
-                            $("#roleSelectTextBox").val(roleName);
-                        }
-                    });
+
                     $("#myModal").modal('show');
 
                 } else {
@@ -517,6 +508,18 @@
     };
 
 
+    function roleComboboxSetValue(roleId){
+        $("#roleSelect option").each(function () {
+            var val = $(this).val();
+            var text = $(this).text();
+            $(this).removeAttr('selected',"selected");
+//                        console.log(val+"    --------       "+text);
+            if(val == roleId){
+                $(this).attr('selected',"selected");
+                $("#roleSelectTextBox").val(text);
+            }
+        });
+    }
 
     $(function () {
         //todo 初始化分页组件
@@ -689,7 +692,7 @@
             $("#username").val('');
             $("#email").val('');
             $("#describe").val('');
-            $("#roleSelectTextBox").val('');
+            roleComboboxSetValue('');
         });
 
         //todo 获取下拉框数据（角色列表）
