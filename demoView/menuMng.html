@@ -162,13 +162,13 @@
                                         <form class="form-horizontal" id="queryForm">
                                             <!-- Title -->
                                             <div class="form-group">
-                                                <label class="control-label col-lg-6" for="queryName">用户名</label>
+                                                <label class="control-label col-lg-6" for="queryGroupName">分组名</label>
                                                 <div class="col-lg-3">
-                                                    <input type="text" class="form-control" id="queryName">
+                                                    <input type="text" class="form-control" id="queryGroupName">
                                                 </div>
-                                                <label class="control-label col-lg-6" for="queryUserName">账号</label>
+                                                <label class="control-label col-lg-6" for="queryMenuName">菜单名</label>
                                                 <div class="col-lg-3">
-                                                    <input type="text" class="form-control" id="queryUserName">
+                                                    <input type="text" class="form-control" id="queryMenuName">
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <button type="button" class="btn btn-success" id="btn-query">搜索
@@ -195,12 +195,12 @@
                             <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th>账号ID</th>
-                                    <th>用户姓名</th>
-                                    <th>账号</th>
-                                    <th>角色</th>
-                                    <th>邮箱</th>
+                                    <th>菜单ID</th>
+                                    <th>分组名</th>
+                                    <th>菜单名</th>
+                                    <th>链接</th>
                                     <th>创建日期</th>
+                                    <th>排序</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -242,40 +242,55 @@
                     <!-- Form starts.  -->
                     <form class="form-horizontal" role="form" id="userForm">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">用户ID</label>
+                            <label class="col-lg-4 control-label">类型</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control" placeholder="用户ID" id="id" readonly="readonly">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="menuType" id="groupRadio" value="group" checked>
+                                        分组
+                                    </label>
+
+                                    <label>
+                                        <input type="radio" name="menuType" id="menuRadio" value="menu">
+                                        菜单
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">用户姓名</label>
+                            <label class="col-lg-4 control-label">菜单ID</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control" placeholder="名称" id="name">
+                                <input type="text" class="form-control" placeholder="菜单ID" id="id" readonly="readonly">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">账号</label>
+                            <label class="col-lg-4 control-label">分组名称</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control" placeholder="账号" id="username">
+                                <input type="text" class="form-control" placeholder="分组名称" id="groupName">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">邮箱</label>
+                            <label class="col-lg-4 control-label">菜单名称</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control" placeholder="邮箱" id="email">
+                                <input type="text" class="form-control" placeholder="菜单名称" id="menuName">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">角色</label>
+                            <label class="col-lg-4 control-label">菜单链接</label>
                             <div class="col-lg-8">
-                            <select class="combobox input-large form-control" style="display: none;" id="roleSelect">
-                            </select>
+                                <input type="text" class="form-control" placeholder="菜单链接" id="menuHref">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">排序</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" placeholder="排序" id="sort">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">备注</label>
                             <div class="col-lg-8">
-                                <textarea class="form-control" rows="3" placeholder="描述" id="describe"></textarea>
+                                <textarea class="form-control" rows="3" placeholder="备注" id="description"></textarea>
                             </div>
                         </div>
 
@@ -321,7 +336,7 @@
     function dataLoad(q) {
 
 
-        var url = "http://127.0.0.1:8095/user/query";
+        var url = "http://127.0.0.1:8095/menu/query";
         if (q !== '') {
             url += '?' + q;
         }
@@ -351,21 +366,24 @@
                         var dataObj = tableData[i];
 
                         var id = dataObj.id;
-                        var name = dataObj.name;
-                        var username = dataObj.username;
-                        var email = dataObj.email;
-                        var roleName = dataObj.roleName;
+                        var menuName = dataObj.menuName;
+                        var menuUrl = dataObj.menuUrl;
+                        var groupMenu = dataObj.groupMenu;
+                        var isGroup = dataObj.isGroup;
+                        var description = dataObj.description;
                         var createDateStr = dataObj.createDateStr;
+                        var sort = dataObj.sort;
 
                         h += "<tr>";
                         h += "<td>" + id + "</td>";
-                        h += "<td>" + name + "</td>";
-                        h += "<td>" + username + "</td>";
-                        h += "<td>" + roleName + "</td>";
-                        h += "<td>" + email + "</td>";
+                        h += "<td>" + groupMenu + "</td>";
+                        h += "<td>" + menuName + "</td>";
+                        h += "<td>" + menuUrl + "</td>";
+                        h += "<td>" + description + "</td>";
                         h += "<td>" + createDateStr + "</td>";
-                        h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"getSysUser(" + id + ")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
-                            "<button type=\"button\" class=\"btn btn-primary\" onclick=\"deleteUser(" + id + ")\" >删除</button></td>";
+                        h += "<td>" + sort + "</td>";
+                        h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"getDetail(" + id + ")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
+                            "<button type=\"button\" class=\"btn btn-primary\" onclick=\"deleteMenu(" + id + ")\" >删除</button></td>";
                         h += "</tr>";
                     }
 
@@ -385,7 +403,7 @@
         });
     };
 
-    function deleteUser(id) {
+    function deleteMenu(id) {
         $.ajax({
             //请求方式
             type: "PUT",
@@ -393,15 +411,13 @@
             contentType: "application/x-www-form-urlencoded",
             async: false,
             //请求地址
-            url: "http://127.0.0.1:8095/user/delete",
+            url: "http://127.0.0.1:8095/menu/delete",
             //数据，json字符串
             data: {
                 userId: id
             },
             //请求成功
             success: function (result) {
-
-
                 var code = result.code;
                 var msg = result.msg;
                 if (code === 1000) {
@@ -423,14 +439,14 @@
         });
     };
 
-    function getSysUser(id) {
+    function getDetail(id) {
         $.ajax({
             //请求方式
             type: "GET",
             //请求的媒体类型
             contentType: "application/x-www-form-urlencoded",
             //请求地址
-            url: "http://127.0.0.1:8095/user/find/" + id,
+            url: "http://127.0.0.1:8095/menu/find/" + id,
             //数据，json字符串
 //            data : list,
             //请求成功
@@ -439,24 +455,29 @@
                 var code = result.code;
                 var msg = result.msg;
                 if (code === 1000) {
-                    var userInfo = result.data;
-                    var id = userInfo.id;
-                    var name = userInfo.name;
-                    var username = userInfo.username;
-                    var description = userInfo.description;
-                    var email = userInfo.email;
-                    var roleName = userInfo.roleName;
-                    var roleId = userInfo.roleId;
+                    var dataObj = result.data;
 
-                    $("#name").val(name);
+                    var id = dataObj.id;
+                    var menuName = dataObj.menuName;
+                    var menuUrl = dataObj.menuUrl;
+                    var groupId = dataObj.groupId;
+                    var groupName = dataObj.groupName;
+                    var isGroup = dataObj.isGroup;
+                    var description = dataObj.description;
+
+                    var sort = dataObj.sort;
+
+
                     $("#id").val(id);
-                    $("#username").val(username);
-                    $("#email").val(email);
-                    $("#describe").val(description);
-                    roleComboboxSetValue(roleId);
-                    console.log("roleId:"+roleId);
-                    //todo 很麻烦的bootstrap select 赋初值
+                    $("#menuName").val(menuName);
+                    $("#menuUrl").val(menuUrl);
+                    $("#groupName").val(groupName);
+                    $("#description").val(description);
+                    $("#sort").val(sort);
 
+
+                    //todo 很麻烦的bootstrap select 赋初值
+                    groupComboboxSetValue(groupId);
                     $("#myModal").modal('show');
 
                 } else {
@@ -475,11 +496,10 @@
     };
 
 
-    function getRoleList() {
+    function getGroupList() {
 
-
-        var url = "http://127.0.0.1:8095/role/findAll";
-        document.getElementById("roleSelect").innerHTML = "";
+        var url = "http://127.0.0.1:8095/group/findAll";
+        document.getElementById("groupSelect").innerHTML = "";
         $.ajax({
             //请求方式
             type: "GET",
@@ -506,7 +526,7 @@
                         h += "<option value='"+id+"' >"+name+"("+id+")"+"</option>";
                     }
 
-                    document.getElementById("roleSelect").innerHTML = h;
+                    document.getElementById("groupSelect").innerHTML = h;
                 } else {
                     alert(msg);
                     console.log(msg);
@@ -523,15 +543,15 @@
     };
 
 
-    function roleComboboxSetValue(roleId){
-        $("#roleSelect option").each(function () {
+    function groupComboboxSetValue(groupId){
+        $("#groupSelect option").each(function () {
             var val = $(this).val();
             var text = $(this).text();
             $(this).removeAttr('selected',"selected");
 //                        console.log(val+"    --------       "+text);
-            if(val == roleId){
+            if(val == groupId){
                 $(this).attr('selected',"selected");
-                $("#roleSelectTextBox").val(text);
+                $("#groupSelectTextBox").val(text);
             }
         });
     }
@@ -542,7 +562,7 @@
             {
                 id: 'paginationComponent',
                 nowNum: 1,
-                allNumUrl: "http://127.0.0.1:8095/user/totalPage",
+                allNumUrl: "http://127.0.0.1:8095/menu/totalPage",
                 isParam: false,
                 pageSize: pageSize,
                 dataMethod: 'dataLoad',
@@ -552,21 +572,16 @@
                 }
             }
         );
-        //todo 加载角色数据
+        //todo 加载列表数据
         dataLoad('');
 
-        //todo 定义添加账号功能
-        var add = function () {
-            var name = $("#name").val();
-            var username = $("#username").val();
-            var email = $("#email").val();
-            var describe = $("#describe").val();
-            var roleSelect = $("#roleSelect").val();
-            if(roleSelect===""||roleSelect===null){
-                alert("请选择角色，角色不能为空！");
-                return;
-            }
-            console.log("roleSelect:"+roleSelect);
+        //todo 定义添加功能
+        var addGroup = function () {
+
+            var sort = $("#sort").val();
+            var groupName = $("#groupName").val();
+            var description = $("#description").val();
+
             $.ajax({
                 //请求方式
                 type: "POST",
@@ -574,14 +589,12 @@
                 contentType: "application/x-www-form-urlencoded",
                 async: false,
                 //请求地址
-                url: "http://127.0.0.1:8095/user/add",
+                url: "http://127.0.0.1:8095/menu/addGroup",
                 //数据，json字符串
                 data: {
-                    name: name,
-                    username: username,
-                    email: email,
-                    describe: describe,
-                    roleId: roleSelect
+                    sort: sort,
+                    groupName: groupName,
+                    description: description
                 },
                 //请求成功
                 success: function (result) {
@@ -606,14 +619,63 @@
                 }
             });
         };
-        var update = function () {
+        var addMenu = function () {
+            var sort = $("#sort").val();
+            var menuName = $("#menuName").val();
+            var menuHref = $("#menuHref").val();
+            var description = $("#description").val();
+
+            var groupSelect = $("#groupSelect").val();
+            if(groupSelect===""||groupSelect===null){
+                alert("请选择菜单角色，分组不能为空！");
+                return;
+            }
+            $.ajax({
+                //请求方式
+                type: "POST",
+                //请求的媒体类型
+                contentType: "application/x-www-form-urlencoded",
+                async: false,
+                //请求地址
+                url: "http://127.0.0.1:8095/user/addMenu",
+                //数据，json字符串
+                data: {
+                    sort: sort,
+                    menuName: menuName,
+                    menuHref: menuHref,
+                    description: description,
+                    groupId: groupSelect
+                },
+                //请求成功
+                success: function (result) {
+                    var code = result.code;
+                    var msg = result.msg;
+                    if (code === 1000) {
+                        alert('操作成功');
+                        dataLoad('');
+                        $paginationComponent.reload();
+                        $("#myModal").modal('hide');
+                    } else {
+                        alert(msg);
+                        console.log(msg);
+                    }
+
+
+                },
+                //请求失败，包含具体的错误信息
+                error: function (e) {
+                    console.log(e.status);
+                    console.log(e.responseText);
+                }
+            });
+        };
+        //todo 定义修改功能
+        var updateGroup = function () {
 
             var id = $("#id").val();
-            var name = $("#name").val();
-            var username = $("#username").val();
-            var email = $("#email").val();
-            var describe = $("#describe").val();
-            var roleSelect = $("#roleSelect").val();
+            var sort = $("#sort").val();
+            var groupName = $("#groupName").val();
+            var description = $("#description").val();
             $.ajax({
                 //请求方式
                 type: "PUT",
@@ -621,15 +683,64 @@
                 contentType: "application/x-www-form-urlencoded",
                 async: false,
                 //请求地址
-                url: "http://127.0.0.1:8095/user/put",
+                url: "http://127.0.0.1:8095/menu/putGroup",
                 //数据，json字符串
                 data: {
                     id: id,
-                    name: name,
-                    username: username,
-                    email: email,
-                    describe: describe,
-                    roleId: roleSelect
+                    sort: sort,
+                    groupName: groupName,
+                    description: description
+                },
+                //请求成功
+                success: function (result) {
+                    var code = result.code;
+                    var msg = result.msg;
+                    if (code === 1000) {
+                        alert('操作成功');
+                        dataLoad('');
+                        $("#myModal").modal('hide');
+                    } else {
+                        alert(msg);
+                        console.log(msg);
+                    }
+
+
+                },
+                //请求失败，包含具体的错误信息
+                error: function (e) {
+                    console.log(e.status);
+                    console.log(e.responseText);
+                }
+            });
+        };
+        var updateMenu = function () {
+
+            var id = $("#id").val();
+            var sort = $("#sort").val();
+            var menuName = $("#menuName").val();
+            var menuHref = $("#menuHref").val();
+            var description = $("#description").val();
+
+            var groupSelect = $("#groupSelect").val();
+            if(groupSelect===""||groupSelect===null){
+                alert("请选择菜单角色，分组不能为空！");
+                return;
+            }
+            $.ajax({
+                //请求方式
+                type: "PUT",
+                //请求的媒体类型
+                contentType: "application/x-www-form-urlencoded",
+                async: false,
+                //请求地址
+                url: "http://127.0.0.1:8095/user/putMenu",
+                //数据，json字符串
+                data: {
+                    id: id,
+                    sort: sort,
+                    menuName: menuName,
+                    menuHref: menuHref,
+                    description: description
                 },
                 //请求成功
                 success: function (result) {
@@ -659,27 +770,39 @@
             $('#btn-save').prop('disabled', false);
             var id = $("#id").val();
             if(id === null||id ===''){
-                add();
+                var type = document.getElementsByName("menuType").value;
+                if(type === "group"){
+                  addGroup();
+                }
+                if(type === "menu"){
+                 addMenu();
+                }
             }else{
-                update();
+                var type = document.getElementsByName("menuType").value;
+                if(type === "group") {
+                    updateGroup();
+                }
+                if(type === "menu") {
+                    updateMenu()
+                }
             }
         });
         //todo 搜索按钮
         $("#btn-query").on('click', function (e) {
-            var queryUserName = $("#queryUserName").val();
-            var queryName = $("#queryName").val();
+            var queryGroupName = $("#queryGroupName").val();
+            var queryMenuName = $("#queryMenuName").val();
 
             var timestamp = Date.parse(new Date());
             var q = "ts=" + timestamp;
 
-            if (queryUserName !== '' && queryUserName !== null){
-                q += "&queryUserName=" + queryUserName;
+            if (queryGroupName !== '' && queryGroupName !== null){
+                q += "&queryGroupName=" + queryGroupName;
             }
-            if (queryName !== '' && queryName !== null){
-                q += "&queryName=" + queryName;
+            if (queryMenuName !== '' && queryMenuName !== null){
+                q += "&queryMenuName=" + queryMenuName;
             }
 
-            if ((queryUserName === '' || queryUserName === null)&&(queryName === ''|| queryName === null)) {
+            if ((queryGroupName === '' || queryGroupName === null)&&(queryGroupName === ''|| queryGroupName === null)) {
                 $paginationComponent.init(false);
             } else {
                 $paginationComponent.init(true);
@@ -691,8 +814,8 @@
 
         //todo 界面调试按钮,测试辅助
         $("#btn-test").on('click',function (e){
-            var roleSelect = $("#roleSelect").val();
-            alert(roleSelect);
+            var groupSelect = $("#groupSelect").val();
+            alert(groupSelect);
         });
 
         //todo 添加角色框监听打开关闭时间
@@ -701,19 +824,20 @@
         });
 
         $('#myModal').on('hidden.bs.modal', function () {
-//          console.log("模态框关闭");
-            $("#name").val('');
+
             $("#id").val('');
-            $("#username").val('');
-            $("#email").val('');
-            $("#describe").val('');
-            roleComboboxSetValue('');
+            $("#menuName").val('');
+            $("#menuUrl").val('');
+            $("#groupName").val('');
+            $("#description").val('');
+
+            groupComboboxSetValue('');
         });
 
-        //todo 获取下拉框数据（角色列表）
-        getRoleList();
+        //todo 获取下拉框数据（分组列表）
+        getGroupList();
         //todo 初始化下拉框
-        $('#roleSelect').combobox({bsVersion: '3',textId: 'roleSelectTextBox'});
+        $('#groupSelect').combobox({bsVersion: '3',textId: 'groupSelectTextBox'});
     });
 
 </script>
