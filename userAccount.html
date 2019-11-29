@@ -350,7 +350,7 @@
                         h += "<td>" + email + "</td>";
                         h += "<td>" + createDateStr + "</td>";
                         h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"getSysUser(" + id + ")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
-                            "<button type=\"button\" class=\"btn btn-primary\" onclick=\"deleteRole(" + id + ")\" >删除</button></td>";
+                            "<button type=\"button\" class=\"btn btn-primary\" onclick=\"deleteUser(" + id + ")\" >删除</button></td>";
                         h += "</tr>";
                     }
 
@@ -378,10 +378,10 @@
             contentType: "application/x-www-form-urlencoded",
             async: false,
             //请求地址
-            url: "http://127.0.0.1:8095/user/deleteRole",
+            url: "http://127.0.0.1:8095/user/delete",
             //数据，json字符串
             data: {
-                roleId: id
+                userId: id
             },
             //请求成功
             success: function (result) {
