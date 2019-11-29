@@ -27,7 +27,8 @@
 
     var Combobox = function (element, options) {
         this.options = $.extend({}, $.fn.combobox.defaults, options);
-        this.template = this.options.template || this.template
+        this.template = this.options.template || this.template;
+        this.textId = this.options.textId
         this.$source = $(element);
         this.$container = this.setup();
         this.$element = this.$container.find('input[type=text]');
@@ -184,7 +185,7 @@
             if (this.options.bsVersion == '2') {
                 return '<div class="combobox-container"><input type="hidden" /> <div class="input-append"> <input type="text" autocomplete="off" /> <span class="add-on dropdown-toggle" data-dropdown="dropdown"> <span class="caret pulldown" style="vertical-align: middle"/> <i class="icon-remove remove"/> </span> </div> </div>'
             } else if (this.options.bsVersion == '3') {
-                return '<div class="combobox-container"> <input type="hidden" /> <div class="input-group"> <input type="text" autocomplete="off" /> <span class="input-group-addon dropdown-toggle" data-dropdown="dropdown"> <span class="caret pulldown" /> <span class="glyphicon glyphicon-remove remove" /> </span> </div> </div>'
+                return '<div class="combobox-container"> <input type="hidden" /> <div class="input-group"> <input type="text" autocomplete="off" id="'+this.textId +'"/> <span class="input-group-addon dropdown-toggle" data-dropdown="dropdown"> <span class="caret pulldown" /> <span class="glyphicon glyphicon-remove remove" /> </span> </div> </div>'
             } else {
                 return '<div class="combobox-container"> <input type="hidden" /> <div class="input-group"> <input type="text" autocomplete="off" />'
                     + '<span class="input-group-append"' + (hasPopper ? ' data-toggle="dropdown" data-reference="parent"' : '') + '>'

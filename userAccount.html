@@ -103,7 +103,7 @@
 
 <div class="content">
 
-    <!-- Sidebar -->
+    <!--todo 菜单部分 -->
     <div class="sidebar">
         <div class="sidebar-dropdown"><a href="#">导航</a></div>
 
@@ -132,12 +132,13 @@
             <li><a href="forms.html"><i class="icon-tasks"></i>表单</a></li>
         </ul>
     </div>
-    <!-- Sidebar ends -->
+    <!-- 菜单部分 ends -->
 
-    <!-- Main bar -->
+    <!--todo 查询表单和数据列表 -->
     <div class="mainbar">
         <div class="matter">
             <div class="container">
+                <!--todo 查询表单 -->
                 <div class="row">
 
                     <div class="col-md-12">
@@ -181,7 +182,7 @@
                         </div>
                     </div>
                 </div>
-
+                <!--todo 数据表格 -->
                 <div class="row">
 
                     <div class="col-md-12">
@@ -220,12 +221,10 @@
                 </div>
             </div>
         </div>
-
-        <!-- Matter ends -->
-
     </div>
 
-    <!-- Mainbar ends -->
+    <!-- 查询表单和数据列表 ends -->
+
     <div class="clearfix"></div>
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -665,13 +664,13 @@
             $("#username").val('');
             $("#email").val('');
             $("#describe").val('');
-            $("#roleSelect").val('');
+            $("#roleSelectTextBox").val('');
         });
 
         //todo 获取下拉框数据（角色列表）
         getRoleList();
         //todo 初始化下拉框
-        $('.combobox').combobox({bsVersion: '3'});
+        $('#roleSelect').combobox({bsVersion: '3',textId: 'roleSelectTextBox'});
     });
 
 </script>
