@@ -51,13 +51,16 @@
 
                 <!-- Upload to server link. Class "dropdown-big" creates big dropdown -->
                 <li class="dropdown dropdown-big">
-                    <a href="#" class="dropdown-toggle" ><span class="label label-success"><i
+                    <a href="#" class="dropdown-toggle"><span class="label label-success"><i
                             class="icon-cloud-upload"></i></span> 后台管理系统</a>
                     <!-- Dropdown -->
                     <ul class="dropdown-menu">
                         <li>
                             <!-- Progress bar -->
-                            <p>企业简介:无锡红光标牌有限公司是一家集研发、生产、销售和服务于一体的专业标牌生产厂家。注册资金500万人民币。主要生产塑料基材、软塑透明树脂、金属、模内复合等标牌产品，洗衣机顶盖板总成，平衡板，以及塑印、彩印、顶盖板、吸音垫等产品。公司位于长江三角洲经济快速增长、风景秀丽的太湖之畔——无锡。 公司自1984年成立至今，已经过了3次跨越式的发展。2004年至今公司投入5000多万元资金建设新的生产基地，目前已竣工并投入生产，占地面积达40000m2，厂房面积近15000m2。公司2004年的年产值达4350多万元，并且每年以平均30%的速度快速增长。目前，本公司的产品已具备国际及国内多项质量认证证书，并为知名家用电器企业：小天鹅电器有限公司、三星电子有限公司、海尔集团、惠尔普等配套生产各类标牌。可以说客户是我们的老师，和他们合作使我们得到很多的学习机会来提高自身的技术水平和管理水平，是我们生产和发展的动力。 公司本着“千方百计生产出满足顾客期望和要求的产品”的宗旨，坚持“工厂出产的不仅仅是产品，更重要的是信誉和质量”的经营理念，不断吸收新技术、引进新设备，使公司的经济效益蒸蒸日上。相信公司将会永不停止探索和发展的脚步，和中国国内以及世界国际性大公司同步发展。</p>
+                            <p>
+                                企业简介:无锡红光标牌有限公司是一家集研发、生产、销售和服务于一体的专业标牌生产厂家。注册资金500万人民币。主要生产塑料基材、软塑透明树脂、金属、模内复合等标牌产品，洗衣机顶盖板总成，平衡板，以及塑印、彩印、顶盖板、吸音垫等产品。公司位于长江三角洲经济快速增长、风景秀丽的太湖之畔——无锡。
+                                公司自1984年成立至今，已经过了3次跨越式的发展。2004年至今公司投入5000多万元资金建设新的生产基地，目前已竣工并投入生产，占地面积达40000m2，厂房面积近15000m2。公司2004年的年产值达4350多万元，并且每年以平均30%的速度快速增长。目前，本公司的产品已具备国际及国内多项质量认证证书，并为知名家用电器企业：小天鹅电器有限公司、三星电子有限公司、海尔集团、惠尔普等配套生产各类标牌。可以说客户是我们的老师，和他们合作使我们得到很多的学习机会来提高自身的技术水平和管理水平，是我们生产和发展的动力。
+                                公司本着“千方百计生产出满足顾客期望和要求的产品”的宗旨，坚持“工厂出产的不仅仅是产品，更重要的是信誉和质量”的经营理念，不断吸收新技术、引进新设备，使公司的经济效益蒸蒸日上。相信公司将会永不停止探索和发展的脚步，和中国国内以及世界国际性大公司同步发展。</p>
 
 
                             <hr/>
@@ -91,7 +94,6 @@
 
     </div>
 </div>
-
 
 
 <!-- Main content starts -->
@@ -161,7 +163,8 @@
                                                     <input type="text" class="form-control" id="queryUserName">
                                                 </div>
                                                 <div class="col-lg-3">
-                                                    <button type="button" class="btn btn-success" id="btn-query">搜索</button>
+                                                    <button type="button" class="btn btn-success" id="btn-query">搜索
+                                                    </button>
                                                     <!--<button type="button" class="btn btn-danger">新增</button>-->
                                                     <a href="#myModal" class="btn btn-info" data-toggle="modal">新增</a>
                                                 </div>
@@ -181,7 +184,7 @@
                     <div class="col-md-12">
                         <div class="widget-content">
 
-                            <table  class="table table-striped table-bordered table-hover">
+                            <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th>账号ID</th>
@@ -221,7 +224,7 @@
 
     <!-- Mainbar ends -->
     <div class="clearfix"></div>
-    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true">
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -229,7 +232,7 @@
                     <h4 class="modal-title">编辑窗口</h4>
                 </div>
                 <div class="modal-body">
-                    <hr />
+                    <hr/>
                     <!-- Form starts.  -->
                     <form class="form-horizontal" role="form" id="userForm">
                         <div class="form-group">
@@ -291,58 +294,64 @@
 <script src="js/util/pagenationJs.js"></script> <!-- Bootstrap -->
 <script>
 
-    var pageNum=1;
-    var pageSize=10;
+    var pageNum = 1;
+    var pageSize = 10;
     var $paginationComponent;
 
 
     function dataLoad(q) {
 
 
-        var url="http://127.0.0.1:8095/sysUser/query";
-        if(q!==''){
-            url+='?'+q;
+        var url = "http://127.0.0.1:8095/user/query";
+        if (q !== '') {
+            url += '?' + q;
         }
 
-        document.getElementById("tb").innerHTML="";
+        document.getElementById("tb").innerHTML = "";
         $.ajax({
             //请求方式
-            type : "GET",
+            type: "GET",
             //请求的媒体类型
             contentType: "application/x-www-form-urlencoded",
             //请求地址
-            url : url,
+            url: url,
             //数据，json字符串
-            data : {
-                pageSize:pageSize,
-                pageNum:pageNum
+            data: {
+                pageSize: pageSize,
+                pageNum: pageNum
             },
             //请求成功
-            success : function(result) {
+            success: function (result) {
 
                 var code = result.code;
                 var msg = result.msg;
-                if(code === 1000){
+                if (code === 1000) {
                     var tableData = result.data;
-                    var h="";
-                    for(var i=0;i<tableData.length;i++) {
+                    var h = "";
+                    for (var i = 0; i < tableData.length; i++) {
                         var dataObj = tableData[i];
 
                         var id = dataObj.id;
                         var name = dataObj.name;
+                        var username = dataObj.username;
+                        var email = dataObj.email;
+                        var roleName = dataObj.roleName;
+                        var createDateStr = dataObj.createDateStr;
 
-//                        var num = i+1;
                         h += "<tr>";
                         h += "<td>" + id + "</td>";
                         h += "<td>" + name + "</td>";
-                        h += "<td></td>";
-                        h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"updateFormId("+id+")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
-                            "<button type=\"button\" class=\"btn btn-primary\" onclick=\"deleteRole("+id+")\" >删除</button></td>";
+                        h += "<td>" + username + "</td>";
+                        h += "<td>" + roleName + "</td>";
+                        h += "<td>" + email + "</td>";
+                        h += "<td>" + createDateStr + "</td>";
+                        h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"updateFormId(" + id + ")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
+                            "<button type=\"button\" class=\"btn btn-primary\" onclick=\"deleteRole(" + id + ")\" >删除</button></td>";
                         h += "</tr>";
                     }
 
-                    document.getElementById("tb").innerHTML=h;
-                }else{
+                    document.getElementById("tb").innerHTML = h;
+                } else {
                     alert(msg);
                     console.log(msg);
                 }
@@ -350,36 +359,37 @@
 
             },
             //请求失败，包含具体的错误信息
-            error : function(e){
+            error: function (e) {
                 console.log(e.status);
                 console.log(e.responseText);
             }
         });
     };
-    function deleteUser(id){
+
+    function deleteUser(id) {
         $.ajax({
             //请求方式
-            type : "PUT",
+            type: "PUT",
             //请求的媒体类型
             contentType: "application/x-www-form-urlencoded",
             async: false,
             //请求地址
-            url : "http://127.0.0.1:8095/sysUser/deleteRole",
+            url: "http://127.0.0.1:8095/user/deleteRole",
             //数据，json字符串
-            data : {
-                roleId:id
+            data: {
+                roleId: id
             },
             //请求成功
-            success : function(result) {
+            success: function (result) {
 
 
                 var code = result.code;
                 var msg = result.msg;
-                if(code === 1000){
+                if (code === 1000) {
                     alert('操作成功');
                     dataLoad('');
                     $paginationComponent.reload()
-                }else{
+                } else {
                     alert(msg);
                     console.log(msg);
                 }
@@ -387,40 +397,41 @@
 
             },
             //请求失败，包含具体的错误信息
-            error : function(e){
+            error: function (e) {
                 console.log(e.status);
                 console.log(e.responseText);
             }
         });
     };
-    function getSysUser(id){
+
+    function getSysUser(id) {
         $.ajax({
             //请求方式
-            type : "GET",
+            type: "GET",
             //请求的媒体类型
             contentType: "application/x-www-form-urlencoded",
             //请求地址
-            url : "http://127.0.0.1:8095/sysUser/find/"+id,
+            url: "http://127.0.0.1:8095/user/find/" + id,
             //数据，json字符串
 //            data : list,
             //请求成功
-            success : function(result) {
+            success: function (result) {
 
                 var code = result.code;
                 var msg = result.msg;
-                if(code === 1000){
+                if (code === 1000) {
                     var roleInfo = result.data;
-                    var h="";
+                    var h = "";
 
 
-                        var name = roleInfo.name;
-                        $("#roleNameUpdate").val(name);
-                        var authorityDTOS = roleInfo.authorityDTOS;
-                        var rootNode = $checkableTreeUpate.treeview('getNode', 0);
-                        ergodic(rootNode,authorityDTOS);
+                    var name = roleInfo.name;
+                    $("#roleNameUpdate").val(name);
+                    var authorityDTOS = roleInfo.authorityDTOS;
+                    var rootNode = $checkableTreeUpate.treeview('getNode', 0);
+                    ergodic(rootNode, authorityDTOS);
 
 
-                }else{
+                } else {
                     alert(msg);
                     console.log(msg);
                 }
@@ -428,26 +439,26 @@
 
             },
             //请求失败，包含具体的错误信息
-            error : function(e){
+            error: function (e) {
                 console.log(e.status);
                 console.log(e.responseText);
             }
         });
     };
 
-    $(function(){
+    $(function () {
         //todo 初始化分页组件
         $paginationComponent = new page(
             {
-                id:'paginationComponent',
-                nowNum:1,
-                allNumUrl:"http://127.0.0.1:8095/sysUser/totalPage",
-                isParam:false,
-                pageSize:pageSize,
-                dataMethod:'dataLoad',
-                queryForm:['queryUserName','queryUserAccount'],
-                callback:function(now,all){
-                    pageNum=now;
+                id: 'paginationComponent',
+                nowNum: 1,
+                allNumUrl: "http://127.0.0.1:8095/user/totalPage",
+                isParam: false,
+                pageSize: pageSize,
+                dataMethod: 'dataLoad',
+                queryForm: ['queryUserName', 'queryUserAccount'],
+                callback: function (now, all) {
+                    pageNum = now;
                 }
             }
         );
@@ -455,37 +466,37 @@
         dataLoad('');
 
         //todo 定义添加账号功能
-        var add = function (){
+        var add = function () {
             var roleName = $("#roleName").val();
             var roleDesc = $("#roleDesc").val();
             var checkedTags = checkedNodesTags();
             var checkedTagsStr = checkedTags.join(",");
             $.ajax({
                 //请求方式
-                type : "POST",
+                type: "POST",
                 //请求的媒体类型
                 contentType: "application/x-www-form-urlencoded",
                 async: false,
                 //请求地址
-                url : "http://127.0.0.1:8095/role/add",
+                url: "http://127.0.0.1:8095/role/add",
                 //数据，json字符串
-                data : {
-                    roleName:roleName,
-                    roleDesc:roleDesc,
-                    checkedTags:checkedTagsStr
+                data: {
+                    roleName: roleName,
+                    roleDesc: roleDesc,
+                    checkedTags: checkedTagsStr
                 },
                 //请求成功
-                success : function(result) {
+                success: function (result) {
 
 
                     var code = result.code;
                     var msg = result.msg;
-                    if(code === 1000){
+                    if (code === 1000) {
                         alert('操作成功');
                         dataLoad('');
                         $paginationComponent.reload();
                         $("#myModal").modal('hide');
-                    }else{
+                    } else {
                         alert(msg);
                         console.log(msg);
                     }
@@ -493,13 +504,13 @@
 
                 },
                 //请求失败，包含具体的错误信息
-                error : function(e){
+                error: function (e) {
                     console.log(e.status);
                     console.log(e.responseText);
                 }
             });
         };
-        var update = function (){
+        var update = function () {
             var roleName = $("#roleNameUpdate").val();
             var roleId = $("#updateFormId").val();
             var roleDesc = $("#roleDescUpdate").val();
@@ -507,30 +518,30 @@
             var checkedTagsStr = checkedTags.join(",");
             $.ajax({
                 //请求方式
-                type : "PUT",
+                type: "PUT",
                 //请求的媒体类型
                 contentType: "application/x-www-form-urlencoded",
                 async: false,
                 //请求地址
-                url : "http://127.0.0.1:8095/role/put",
+                url: "http://127.0.0.1:8095/role/put",
                 //数据，json字符串
-                data : {
-                    roleId:roleId,
-                    roleName:roleName,
-                    roleDesc:roleDesc,
-                    checkedTags:checkedTagsStr
+                data: {
+                    roleId: roleId,
+                    roleName: roleName,
+                    roleDesc: roleDesc,
+                    checkedTags: checkedTagsStr
                 },
                 //请求成功
-                success : function(result) {
+                success: function (result) {
 //                    console.log(result);
 
                     var code = result.code;
                     var msg = result.msg;
-                    if(code === 1000){
+                    if (code === 1000) {
                         alert('操作成功');
                         dataLoad('');
                         $("#updateModal").modal('hide');
-                    }else{
+                    } else {
                         alert(msg);
                         console.log(msg);
                     }
@@ -538,7 +549,7 @@
 
                 },
                 //请求失败，包含具体的错误信息
-                error : function(e){
+                error: function (e) {
                     console.log(e.status);
                     console.log(e.responseText);
                 }
@@ -546,17 +557,17 @@
         };
 
         //todo 点击添加账号按钮
-        $('#btn-add').on('click',function (e) {
+        $('#btn-add').on('click', function (e) {
             $('#btn-add').prop('disabled', true);
             add();
         });
         //todo 搜索按钮
-        $("#btn-query").on('click',function (e) {
+        $("#btn-query").on('click', function (e) {
             var queryRoleName = $("#queryRoleName").val();
-            var q = "queryRoleName="+queryRoleName;
-            if(queryRoleName===''||queryRoleName===null){
+            var q = "queryRoleName=" + queryRoleName;
+            if (queryRoleName === '' || queryRoleName === null) {
                 $paginationComponent.init(false);
-            }else{
+            } else {
                 $paginationComponent.init(true);
             }
 
@@ -565,7 +576,7 @@
         });
 
         //todo 点击修改角色按钮
-        $("#btn-update").on('click',function(e){
+        $("#btn-update").on('click', function (e) {
             $('#btn-update').prop('disabled', true);
             update();
         });
@@ -585,6 +596,26 @@
 
 
     });
+    Date.prototype.format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1,                 //月份
+            "d+": this.getDate(),                    //日
+            "h+": this.getHours(),                   //小时
+            "m+": this.getMinutes(),                 //分
+            "s+": this.getSeconds(),                 //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds()             //毫秒
+        };
+        if (/(y+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        }
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            }
+        }
+        return fmt;
+    }
 </script>
 </body>
 </html>
