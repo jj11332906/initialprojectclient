@@ -227,7 +227,7 @@
         </div>
     </div>
 
-    <!-- 查询表单和数据列表 ends -->
+    <!--todo 查询表单和数据列表 ends -->
 
     <div class="clearfix"></div>
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -246,36 +246,43 @@
                             <div class="col-lg-8">
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="menuType" id="groupRadio" value="group" checked>
+                                        <input type="radio" name="menuType" id="group" value="group" checked>
                                         分组
                                     </label>
 
                                     <label>
-                                        <input type="radio" name="menuType" id="menuRadio" value="menu">
+                                        <input type="radio" name="menuType" id="menu" value="menu">
                                         菜单
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">菜单ID</label>
+                            <label class="col-lg-4 control-label">菜单/分组ID</label>
                             <div class="col-lg-8">
                                 <input type="text" class="form-control" placeholder="菜单ID" id="id" readonly="readonly">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="groupSelectDiv">
+                            <label class="col-lg-4 control-label">分组选择</label>
+                            <div class="col-lg-8">
+                                <select class="combobox input-large form-control" style="display: none;" id="groupSelect">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group"  id="groupNameDiv">
                             <label class="col-lg-4 control-label">分组名称</label>
                             <div class="col-lg-8">
                                 <input type="text" class="form-control" placeholder="分组名称" id="groupName">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group"  id="menuNameDiv">
                             <label class="col-lg-4 control-label">菜单名称</label>
                             <div class="col-lg-8">
                                 <input type="text" class="form-control" placeholder="菜单名称" id="menuName">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group"  id="menuHrefDiv">
                             <label class="col-lg-4 control-label">菜单链接</label>
                             <div class="col-lg-8">
                                 <input type="text" class="form-control" placeholder="菜单链接" id="menuHref">
@@ -316,8 +323,8 @@
 <script src="../js/jquery-ui-1.9.2.custom.min.js"></script> <!-- jQuery UI -->
 <script src="../js/util/pagenationJs.js"></script> <!-- Bootstrap -->
 <script src="../js/bootstrap-combobox.js"></script> <!-- Bootstrap -->
-
-
+<script src="../js/fullcalendar.min.js"></script> <!-- Full Google Calendar - Calendar -->
+<script src="../js/jquery.prettyPhoto.js"></script> <!-- prettyPhoto -->
 
 <script src="../js/sparklines.js"></script> <!-- Sparklines -->
 <script src="../js/jquery.cleditor.min.js"></script> <!-- CLEditor -->
@@ -325,7 +332,6 @@
 <script src="../js/bootstrap-switch.min.js"></script> <!-- Bootstrap Toggle -->
 <script src="../js/filter.js"></script> <!-- Filter for support page -->
 <script src="../js/custom.js"></script> <!-- Custom codes -->
-<script src="../js/charts.js"></script> <!-- Charts & Graphs -->
 
 <script>
 
@@ -498,7 +504,7 @@
 
     function getGroupList() {
 
-        var url = "http://127.0.0.1:8095/group/findAll";
+        var url = "http://127.0.0.1:8095/menu/groupList";
         document.getElementById("groupSelect").innerHTML = "";
         $.ajax({
             //请求方式
@@ -554,6 +560,25 @@
                 $("#groupSelectTextBox").val(text);
             }
         });
+    }
+
+
+    function changeMenuType(menuType){
+        if(menuType==="group"){
+            $("#groupSelectDiv").hide();
+            $("#groupNameDiv").show();
+            $("#menuNameDiv").hide();
+            $("#menuHrefDiv").hide();
+
+        }
+        if(menuType==="menu"){
+            $("#groupSelectDiv").show();
+            $("#groupNameDiv").hide();
+            $("#menuNameDiv").show();
+            $("#menuHrefDiv").show();
+
+        }
+
     }
 
     $(function () {
@@ -740,7 +765,8 @@
                     sort: sort,
                     menuName: menuName,
                     menuHref: menuHref,
-                    description: description
+                    description: description,
+                    groupId: groupSelect
                 },
                 //请求成功
                 success: function (result) {
@@ -820,6 +846,10 @@
 
         //todo 添加角色框监听打开关闭时间
         $('#myModal').on('show.bs.modal', function () {
+           var menuType = $("input[name='menuType']:checked").attr("value");
+//           alert(menuType);
+            changeMenuType(menuType);
+
             $('#btn-save').prop('disabled', false);
         });
 
@@ -834,6 +864,17 @@
             groupComboboxSetValue('');
         });
 
+
+        //注册radio，on change事件
+
+        $("[name='menuType']").on("change",
+            function (e) {
+                console.log($(e.target).val());
+                var menuType = $(e.target).val();
+                changeMenuType(menuType);
+
+            }
+        );
         //todo 获取下拉框数据（分组列表）
         getGroupList();
         //todo 初始化下拉框
