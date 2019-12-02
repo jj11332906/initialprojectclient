@@ -374,7 +374,7 @@
                         var id = dataObj.id;
                         var menuName = dataObj.menuName;
                         var menuUrl = dataObj.menuUrl;
-                        var groupMenu = dataObj.groupMenu;
+                        var groupName = dataObj.groupName;
                         var isGroup = dataObj.isGroup;
                         var description = dataObj.description;
                         var createDateStr = dataObj.createDateStr;
@@ -382,7 +382,7 @@
 
                         h += "<tr>";
                         h += "<td>" + id + "</td>";
-                        h += "<td>" + groupMenu + "</td>";
+                        h += "<td>" + groupName + "</td>";
                         h += "<td>" + menuName + "</td>";
                         h += "<td>" + menuUrl + "</td>";
                         h += "<td>" + description + "</td>";
@@ -795,21 +795,23 @@
         $('#btn-save').on('click', function (e) {
             $('#btn-save').prop('disabled', false);
             var id = $("#id").val();
-            if(id === null||id ===''){
-                var type = document.getElementsByName("menuType").value;
-                if(type === "group"){
-                  addGroup();
+            var menuType = $("input[name='menuType']:checked").attr("value");
+            if(menuType==="menu"){
+                var groupSelect = $("#groupSelect").val();
+                if(groupSelect===""||groupSelect===null){
+                    alert("请选择菜单分组，分组不能为空！");
+                    return;
                 }
-                if(type === "menu"){
-                 addMenu();
+                if(id === null||id ===''){
+                    addMenu();
+                }else{
+                    updateMenu()
                 }
             }else{
-                var type = document.getElementsByName("menuType").value;
-                if(type === "group") {
+                if(id === null||id ===''){
+                    addGroup();
+                }else{
                     updateGroup();
-                }
-                if(type === "menu") {
-                    updateMenu()
                 }
             }
         });
