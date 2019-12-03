@@ -359,25 +359,25 @@
         <!-- If the main navigation has sub navigation, then add the class "has_sub" to "li" of main navigation. -->
         <ul id="nav">
             <!-- Main menu with font awesome icon -->
-            <li><a href="../index.html" class="open"><i class="icon-home"></i> 首页</a>
+            <!--<li><a href="../index.html" class="open"><i class="icon-home"></i> 首页</a>-->
                 <!-- Sub menu markup
                 <ul>
                   <li><a href="#">Submenu #1</a></li>
                   <li><a href="#">Submenu #2</a></li>
                   <li><a href="#">Submenu #3</a></li>
                 </ul>-->
-            </li>
-            <li class="has_sub"><a href="#"><i class="icon-list-alt"></i> 系统管理 <span class="pull-right"><i
-                    class="icon-chevron-right"></i></span></a>
-                <ul>
-                    <li><a href="authorityMng.html">权限管理</a></li>
-                    <li><a href="menuMng.html">菜单管理</a></li>
-                    <li><a href="userAccount.html">账号管理</a></li>
-                    <li><a href="roleMng.html">角色管理</a></li>
-                </ul>
-            </li>
-            <li><a href="../tables.html"><i class="icon-table"></i>表格</a></li>
-            <li><a href="../forms.html"><i class="icon-tasks"></i>表单</a></li>
+            <!--</li>-->
+            <!--<li class="has_sub"><a href="#"><i class="icon-list-alt"></i> 系统管理 <span class="pull-right"><i-->
+                    <!--class="icon-chevron-right"></i></span></a>-->
+                <!--<ul>-->
+                    <!--<li><a href="authorityMng.html">权限管理</a></li>-->
+                    <!--<li><a href="menuMng.html">菜单管理</a></li>-->
+                    <!--<li><a href="userAccount.html">账号管理</a></li>-->
+                    <!--<li><a href="roleMng.html">角色管理</a></li>-->
+                <!--</ul>-->
+            <!--</li>-->
+            <!--<li><a href="../tables.html"><i class="icon-table"></i>表格</a></li>-->
+            <!--<li><a href="../forms.html"><i class="icon-tasks"></i>表单</a></li>-->
         </ul>
     </div>
 
@@ -483,8 +483,12 @@
 <script src="../js/filter.js"></script> <!-- Filter for support page -->
 <script src="../js/custom.js"></script> <!-- Custom codes -->
 <script src="../js/charts.js"></script> <!-- Charts & Graphs -->
-<script>
 
+
+
+<script src="../js/util/menuJs.js"></script> <!-- menuJs -->
+<script>
+    var $menuComponent;
     function dataLoad() {
         $.ajax({
             //请求方式
@@ -537,7 +541,12 @@
         });
     };
     $(function(){
-
+        //todo 初始化菜单组件
+        $menuComponent = new menu(
+            {
+                id:'nav'
+            }
+        );
         dataLoad();
     });
 </script>
