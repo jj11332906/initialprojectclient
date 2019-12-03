@@ -595,7 +595,8 @@
         //todo 初始化菜单组件
         $menuComponent = new menu(
             {
-                id:'nav'
+                id: 'nav',
+                currentMenuName: '菜单管理'
             }
         );
         //todo 加载列表数据
@@ -842,8 +843,10 @@
 
         //todo 界面调试按钮,测试辅助
         $("#btn-test").on('click',function (e){
-            var groupSelect = $("#groupSelect").combobox("appendItem");
-          console.log(groupSelect);
+//            var groupSelect = $("#groupSelect").combobox("appendItem");
+//          console.log(groupSelect);
+
+//            $menuComponent.open('账号管理');
         });
 
         //todo 添加角色框监听打开关闭时间

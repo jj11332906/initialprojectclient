@@ -5,21 +5,22 @@ function menu(json) {
         return false
     }
     this.obj = null;
+    this.currentMenuName = null;
 
     this.menuData = null;
 
     var _this = this;
     this.obj = document.getElementById(this.json.id);
-
-    //todo 获取总页数
+    this.currentMenuName = this.json.currentMenuName;
+        //todo 获取总页数
     this.menuData = this.getMenuData();
 
     //todo 开始控制dom
-    this.domControl( this.menuData,this.obj,_this);
+    this.domControl( this.menuData, this.currentMenuName,this.obj,_this);
 
 }
 
-menu.prototype.domControl = function (menuDatas,objDom,pageObj) {
+menu.prototype.domControl = function (menuDatas,currentMenuName,objDom,pageObj) {
 //  <li><a href="../index.html" class="open"><i class="icon-home"></i> 首页</a>
 
     for(var i=0;i<menuDatas.length;i++){
@@ -28,17 +29,25 @@ menu.prototype.domControl = function (menuDatas,objDom,pageObj) {
         var group = menuDatas[i];
         gA.href = "#"+1;
         gA.innerHTML = group.menuName;
+
         gL.appendChild(gA);
         var subMenus = group.menu;
         if(subMenus.length>0){
+            // gA.className += "open subdrop";
             gL.className += "has_sub";
             var mul =  document.createElement('ul');
+            // mul.style = "display: block;";
             for(var j=0;j<subMenus.length;j++){
                 var mL =  document.createElement('li');
                 var mA =  document.createElement('a');
                 var subMenu = subMenus[j];
                 mA.href = subMenu.menuUrl;
                 mA.innerHTML = subMenu.menuName;
+                if(subMenu.menuName === currentMenuName){
+                    gA.className += "open subdrop";
+                    mul.style = "display: block;";
+                }
+
                 mL.appendChild(mA);
                 mul.appendChild(mL);
             }
