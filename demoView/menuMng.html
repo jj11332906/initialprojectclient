@@ -474,17 +474,24 @@
 
                     var sort = dataObj.sort;
 
+//                    alert(isGroup);
+                    if(isGroup){
+                        $("#id").val(id);
+                        $("input[name='menuType'][value='group']").attr("checked",true);
+                        $("#groupName").val(menuName);
+                        $("#description").val(description);
+                        $("#sort").val(sort);
+                    }else{
+                        $("#id").val(id);
+                        $("input[name='menuType'][value='menu']").attr("checked",true);
+                        $("#menuName").val(menuName);
+                        $("#menuHref").val(menuUrl);
+                        $("#description").val(description);
+                        $("#sort").val(sort);
 
-                    $("#id").val(id);
-                    $("#menuName").val(menuName);
-                    $("#menuUrl").val(menuUrl);
-                    $("#groupName").val(groupName);
-                    $("#description").val(description);
-                    $("#sort").val(sort);
-
-
-                    //todo 很麻烦的bootstrap select 赋初值
-                    groupComboboxSetValue(groupId);
+                        //todo 很麻烦的bootstrap select 赋初值
+                        groupComboboxSetValue(groupId);
+                    }
                     $("#myModal").modal('show');
 
                 } else {
@@ -759,7 +766,7 @@
                 contentType: "application/x-www-form-urlencoded",
                 async: false,
                 //请求地址
-                url: "http://127.0.0.1:8095/user/putMenu",
+                url: "http://127.0.0.1:8095/menu/putMenu",
                 //数据，json字符串
                 data: {
                     id: id,
@@ -860,10 +867,12 @@
 
             $("#id").val('');
             $("#menuName").val('');
+            $("#menuHref").val('');
+            $("#sort").val('');
             $("#menuUrl").val('');
             $("#groupName").val('');
             $("#description").val('');
-
+            $("input[name='menuType'][value='group']").attr("checked",true);
             groupComboboxSetValue('');
         });
 
