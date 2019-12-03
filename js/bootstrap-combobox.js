@@ -89,7 +89,7 @@
                     selected = option.text();
                     selectedValue = option.val();
                 }
-            })
+            });
             this.map = map;
             if (selected) {
                 this.$element.val(selected);
@@ -238,7 +238,7 @@
                 i = $(that.options.item).attr('data-value', item);
                 i.find('a').html(that.highlighter(item));
                 return i[0];
-            })
+            });
 
             items.first().addClass('active');
             this.$menu.html(items);
@@ -471,11 +471,23 @@
         , mouseleave: function (e) {
             this.mousedover = false;
         }
+        , getvalue: function () {
+            console.log( this.$source.val());
+            console.log( this.$target.val());
+            console.log( this.$element.val());
+            // var selectValue = this.$target.val();
+            return  this.$target.val();
+        }
     };
 
     /* COMBOBOX PLUGIN DEFINITION
      * =========================== */
     $.fn.combobox = function (option) {
+        if(option === "getvalue"){
+            var $this = $(this)
+            var data = $this.data('combobox');
+            return data.getvalue();
+        }
         return this.each(function () {
             var $this = $(this)
                 , data = $this.data('combobox')

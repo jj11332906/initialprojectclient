@@ -527,12 +527,13 @@
                         var dataObj = tableData[i];
 
                         var id = dataObj.id;
-                        var name = dataObj.name;
+                        var name = dataObj.menuName;
 
                         h += "<option value='"+id+"' >"+name+"("+id+")"+"</option>";
                     }
 
                     document.getElementById("groupSelect").innerHTML = h;
+
                 } else {
                     alert(msg);
                     console.log(msg);
@@ -634,7 +635,6 @@
                         alert(msg);
                         console.log(msg);
                     }
-
 
                 },
                 //请求失败，包含具体的错误信息
@@ -812,6 +812,7 @@
                     addGroup();
                 }else{
                     updateGroup();
+
                 }
             }
         });
@@ -836,14 +837,13 @@
                 $paginationComponent.init(true);
             }
 
-//            initPagination(q);
             dataLoad(q);
         });
 
         //todo 界面调试按钮,测试辅助
         $("#btn-test").on('click',function (e){
-            var groupSelect = $("#groupSelect").val();
-            alert(groupSelect);
+            var groupSelect = $("#groupSelect").combobox("appendItem");
+          console.log(groupSelect);
         });
 
         //todo 添加角色框监听打开关闭时间
@@ -877,6 +877,7 @@
 
             }
         );
+
         //todo 获取下拉框数据（分组列表）
         getGroupList();
         //todo 初始化下拉框
