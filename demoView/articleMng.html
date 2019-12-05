@@ -279,6 +279,8 @@
 <script src="../js/bootstrap-combobox.js"></script> <!-- Combobox -->
 
 <script src="../js/util/menuJs.js"></script> <!-- menuJs -->
+
+<script src="../js/util/request.js"></script> <!-- menuJs -->
 <script>
 
     var pageNum = 1;
@@ -286,67 +288,47 @@
     var $paginationComponent;
     var $menuComponent;
 
+
     function dataLoad(q) {
-
-
         var url = "http://127.0.0.1:8095/article/query";
         if (q !== '') {
             url += '?' + q;
         }
+        var $request = new request({
 
-        document.getElementById("tb").innerHTML = "";
-        $.ajax({
-            //请求方式
-            type: "GET",
-            //请求的媒体类型
-            contentType: "application/x-www-form-urlencoded",
-            //请求地址
             url: url,
-            //数据，json字符串
-            data: {
+            params: {
                 pageSize: pageSize,
                 pageNum: pageNum
             },
-            //请求成功
-            success: function (result) {
+            async: false
+        });
+        document.getElementById("tb").innerHTML = "";
+        $request.get(function (tableData) {
+            console.log(tableData);
+            var h = "";
+            for (var i = 0; i < tableData.length; i++) {
+                var dataObj = tableData[i];
 
-                var code = result.code;
-                var msg = result.msg;
-                if (code === 1000) {
-                    var tableData = result.data;
-                    var h = "";
-                    for (var i = 0; i < tableData.length; i++) {
-                        var dataObj = tableData[i];
-
-                        var id = dataObj.id;
-                        var title = dataObj.menuName;
-                        var creator = dataObj.creator;
-                        var createDate = dataObj.createDateStr;
+                var id = dataObj.id;
+                var title = dataObj.title;
+                var creator = dataObj.creator;
+                var createDate = dataObj.createDateStr;
 
 
 
-                        h += "<tr>";
-                        h += "<td>" + id + "</td>";
-                        h += "<td>" + title + "</td>";
-                        h += "<td>" + creator + "</td>";
-                        h += "<td>" + createDate + "</td>";
+                h += "<tr>";
+                h += "<td>" + id + "</td>";
+                h += "<td>" + title + "</td>";
+                h += "<td>" + creator + "</td>";
+                h += "<td>" + createDate + "</td>";
 
-                        h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"getDetail(" + id + ")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
-                            "<button type=\"button\" class=\"btn btn-primary\" onclick=\"deleteObj(" + id + ")\" >删除</button></td>";
-                        h += "</tr>";
-                    }
-
-                    document.getElementById("tb").innerHTML = h;
-                } else {
-                    alert(msg);
-                    console.log(msg);
-                }
-            },
-            //请求失败，包含具体的错误信息
-            error: function (e) {
-                console.log(e.status);
-                console.log(e.responseText);
+                h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"getDetail(" + id + ")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
+                    "<button type=\"button\" class=\"btn btn-primary\" onclick=\"deleteObj(" + id + ")\" >删除</button></td>";
+                h += "</tr>";
             }
+
+            document.getElementById("tb").innerHTML = h;
         });
     };
 
