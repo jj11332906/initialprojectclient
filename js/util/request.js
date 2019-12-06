@@ -39,9 +39,9 @@ request.prototype.get = function (callback) {
         contentType: "application/x-www-form-urlencoded",
         //请求地址
         url: request_url,
-        beforeSend: function(request) {
-            request.setRequestHeader("Authorization",  access_token);
-        },
+        // beforeSend: function(request) {
+        //     request.setRequestHeader("Authorization",  access_token);
+        // },
         // 数据，json字符串
         data: this.params,
         async: this.async,

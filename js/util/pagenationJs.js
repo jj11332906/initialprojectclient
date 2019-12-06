@@ -263,8 +263,7 @@ page.prototype.init = function (isParam) {
 };
 
 page.prototype.getTotalPages = function (url, ps, isParam) {
-    // console.log("url:" + url);
-    // console.log("ps:" + ps);
+
     if (isParam === true) {
         var timestamp = Date.parse(new Date());
         var q = "ts=" + timestamp;
@@ -280,41 +279,19 @@ page.prototype.getTotalPages = function (url, ps, isParam) {
         // console.log(q);
         url += "?" + q;
     }
-    // console.log(url);
-    // return 5;
-    var totalPages;
-    $.ajax({
-        //请求方式
-        type: "GET",
-        //请求的媒体类型
-        contentType: "application/x-www-form-urlencoded",
-        //请求地址
+
+    var $request = new request({
+
         url: url,
-        //数据，json字符串
-        data: {
+        params: {
             pageSize: ps
         },
-        async: false,
-        //请求成功
-        success: function (result) {
-            // console.log(result);
-            var code = result.code;
-            var msg = result.msg;
-            if (code === 1000) {
-                totalPages = result.data;
-
-            } else {
-                alert(msg);
-                console.log(msg);
-            }
-
-
-        },
-        //请求失败，包含具体的错误信息
-        error: function (e) {
-            console.log(e.status);
-            console.log(e.responseText);
-        }
+        async: false
+    });
+    var totalPages;
+    $request.get(function (tp) {
+        console.log("totalPages："+tp);
+        totalPages = tp;
     });
     return totalPages;
 };
