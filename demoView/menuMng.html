@@ -282,6 +282,12 @@
                                 <textarea class="form-control" rows="3" placeholder="备注" id="description"></textarea>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">权限关联</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" placeholder="权限关联" id="relationAuthority">
+                            </div>
+                        </div>
 
                     </form>
 
@@ -458,6 +464,7 @@
                     var groupName = dataObj.groupName;
                     var isGroup = dataObj.isGroup;
                     var description = dataObj.description;
+                    var relationAuthority = dataObj.relationAuthority;
 
                     var sort = dataObj.sort;
 
@@ -474,6 +481,7 @@
                         $("#menuName").val(menuName);
                         $("#menuHref").val(menuUrl);
                         $("#description").val(description);
+                        $("#relationAuthority").val(relationAuthority);
                         $("#sort").val(sort);
 
                         //todo 很麻烦的bootstrap select 赋初值
@@ -652,6 +660,7 @@
             var menuHref = $("#menuHref").val();
             var description = $("#description").val();
 
+            var relationAuthority = $("#relationAuthority").val();
             var groupSelect = $("#groupSelect").val();
             if(groupSelect===""||groupSelect===null){
                 alert("请选择菜单角色，分组不能为空！");
@@ -671,7 +680,8 @@
                     menuName: menuName,
                     menuHref: menuHref,
                     description: description,
-                    groupId: groupSelect
+                    groupId: groupSelect,
+                    relationAuthority: relationAuthority
                 },
                 //请求成功
                 success: function (result) {
@@ -747,7 +757,7 @@
             var menuName = $("#menuName").val();
             var menuHref = $("#menuHref").val();
             var description = $("#description").val();
-
+            var relationAuthority = $("#relationAuthority").val();
             var groupSelect = $("#groupSelect").val();
             if(groupSelect===""||groupSelect===null){
                 alert("请选择菜单角色，分组不能为空！");
@@ -768,7 +778,8 @@
                     menuName: menuName,
                     menuHref: menuHref,
                     description: description,
-                    groupId: groupSelect
+                    groupId: groupSelect,
+                    relationAuthority:relationAuthority
                 },
                 //请求成功
                 success: function (result) {
