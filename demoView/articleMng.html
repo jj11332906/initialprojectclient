@@ -242,7 +242,6 @@
                                 <textarea class="form-control" rows="3" placeholder="备注" id="remark"></textarea>
                             </div>
                         </div>
-
                     </form>
 
                 </div>
@@ -369,50 +368,31 @@
     };
 
     function getDetail(id) {
-        $.ajax({
-            //请求方式
-            type: "GET",
-            //请求的媒体类型
-            contentType: "application/x-www-form-urlencoded",
-            //请求地址
-            url: "http://127.0.0.1:8095/article/find/" + id,
-            //数据，json字符串
-//            data : list,
-            //请求成功
-            success: function (result) {
 
-                var code = result.code;
-                var msg = result.msg;
-                if (code === 1000) {
-                    var dataObj = result.data;
+        var url = "http://127.0.0.1:8095/article/find/" + id;
 
-                    var id = dataObj.id;
-                    var title = dataObj.title;
-                    var content = dataObj.content;
-                    var remark = dataObj.remark;
-                    var creator = dataObj.creator;
-                    var createDate = dataObj.createDate;
+        var $request = new request({
 
-                    $("#id").val(id);
-                    $("#title").val(title);
-                    $("#content").val(content);
-                    $("#remark").val(remark);
-                    $("#creator").val(creator);
-
-                    $("#myModal").modal('show');
-
-                } else {
-                    alert(msg);
-                    console.log(msg);
-                }
-
-
+            url: url,
+            params: {
             },
-            //请求失败，包含具体的错误信息
-            error: function (e) {
-                console.log(e.status);
-                console.log(e.responseText);
-            }
+            async: false
+        });
+        $request.get(function (dataObj) {
+
+            var id = dataObj.id;
+            var title = dataObj.title;
+            var content = dataObj.content;
+            var remark = dataObj.remark;
+            var creator = dataObj.creator;
+
+            $("#id").val(id);
+            $("#title").val(title);
+            $("#content").val(content);
+            $("#remark").val(remark);
+
+            $("#myModal").modal('show');
+
         });
     };
 
@@ -445,46 +425,33 @@
 
         //todo 定义添加功能
         var add = function () {
-
             var title = $("#title").val();
             var content = $("#content").val();
             var remark = $("#remark").val();
-
-            $.ajax({
-                //请求方式
-                type: "POST",
-                //请求的媒体类型
-                contentType: "application/x-www-form-urlencoded",
-                async: false,
-                //请求地址
-                url: "http://127.0.0.1:8095/article/add",
-                //数据，json字符串
-                data: {
+            var url = "http://127.0.0.1:8095/article/add";
+            var $request = new request({
+                url: url,
+                params: {
                     title: title,
                     content: content,
                     remark: remark
                 },
-                //请求成功
-                success: function (result) {
-                    var code = result.code;
-                    var msg = result.msg;
-                    if (code === 1000) {
-                        alert('操作成功');
-                        dataLoad('');
-                        $paginationComponent.reload();
-                        $("#myModal").modal('hide');
-                    } else {
-                        alert(msg);
-                        console.log(msg);
-                    }
-
-                },
-                //请求失败，包含具体的错误信息
-                error: function (e) {
-                    console.log(e.status);
-                    console.log(e.responseText);
+                async: false
+            });
+            $request.post(function (result) {
+                var code = result.code;
+                var msg = result.msg;
+                if (code === 1000) {
+                    alert('操作成功');
+                    dataLoad('');
+                    $paginationComponent.reload();
+                    $("#myModal").modal('hide');
+                } else {
+                    alert(msg);
+                    console.log(msg);
                 }
             });
+
         };
 
         //todo 定义修改功能
@@ -494,40 +461,27 @@
             var title = $("#title").val();
             var content = $("#content").val();
             var remark = $("#remark").val();
-            $.ajax({
-                //请求方式
-                type: "PUT",
-                //请求的媒体类型
-                contentType: "application/x-www-form-urlencoded",
-                async: false,
-                //请求地址
-                url: "http://127.0.0.1:8095/article/put",
-                //数据，json字符串
-                data: {
-                    id: id,
+
+            var url = "http://127.0.0.1:8095/article/put/"+id;
+            var $request = new request({
+                url: url,
+                params: {
                     title: title,
                     content: content,
                     remark: remark
                 },
-                //请求成功
-                success: function (result) {
-                    var code = result.code;
-                    var msg = result.msg;
-                    if (code === 1000) {
-                        alert('操作成功');
-                        dataLoad('');
-                        $("#myModal").modal('hide');
-                    } else {
-                        alert(msg);
-                        console.log(msg);
-                    }
-
-
-                },
-                //请求失败，包含具体的错误信息
-                error: function (e) {
-                    console.log(e.status);
-                    console.log(e.responseText);
+                async: false
+            });
+            $request.put(function (result) {
+                var code = result.code;
+                var msg = result.msg;
+                if (code === 1000) {
+                    alert('操作成功');
+                    dataLoad('');
+                    $("#myModal").modal('hide');
+                } else {
+                    alert(msg);
+                    console.log(msg);
                 }
             });
         };
