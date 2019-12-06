@@ -474,6 +474,7 @@
                         $("input[name='menuType'][value='group']").attr("checked",true);
                         $("#groupName").val(menuName);
                         $("#description").val(description);
+                        $("#relationAuthority").val(relationAuthority);
                         $("#sort").val(sort);
                     }else{
                         $("#id").val(id);
@@ -617,7 +618,7 @@
             var sort = $("#sort").val();
             var groupName = $("#groupName").val();
             var description = $("#description").val();
-
+            var relationAuthority = $("#relationAuthority").val();
             $.ajax({
                 //请求方式
                 type: "POST",
@@ -630,7 +631,8 @@
                 data: {
                     sort: sort,
                     groupName: groupName,
-                    description: description
+                    description: description,
+                    relationAuthority: relationAuthority
                 },
                 //请求成功
                 success: function (result) {
@@ -713,6 +715,7 @@
             var sort = $("#sort").val();
             var groupName = $("#groupName").val();
             var description = $("#description").val();
+            var relationAuthority = $("#relationAuthority").val();
             $.ajax({
                 //请求方式
                 type: "PUT",
@@ -726,7 +729,8 @@
                     id: id,
                     sort: sort,
                     groupName: groupName,
-                    description: description
+                    description: description,
+                    relationAuthority:relationAuthority
                 },
                 //请求成功
                 success: function (result) {
