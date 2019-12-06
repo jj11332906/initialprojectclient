@@ -96,38 +96,16 @@ menu.prototype.domControl = function (menuDatas,currentMenuName,objDom,pageObj) 
 menu.prototype.getMenuData = function () {
 
     var dataMenu;
-    $.ajax({
-        //请求方式
-        type: "GET",
-        //请求的媒体类型
-        contentType: "application/x-www-form-urlencoded",
-        //请求地址
-        url: "http://127.0.0.1:8095/menu/menuData",
-        // 数据，json字符串
-        // data: {
-        //     pageSize: ps
-        // },
-        async: false,
-        //请求成功
-        success: function (result) {
-            // console.log(result);
-            var code = result.code;
-            var msg = result.msg;
-            if (code === 1000) {
-                dataMenu = result.data;
+    var url = "http://127.0.0.1:8095/menu/menuData";
+    var $request = new request({
 
-            } else {
-                alert(msg);
-                console.log(msg);
-            }
-
-
+        url: url,
+        params: {
         },
-        //请求失败，包含具体的错误信息
-        error: function (e) {
-            console.log(e.status);
-            console.log(e.responseText);
-        }
+        async: false
+    });
+    $request.get(function (dm) {
+        dataMenu = dm;
     });
     return dataMenu;
 };
