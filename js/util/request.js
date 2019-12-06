@@ -24,14 +24,24 @@ request.prototype.get = function (callback) {
     console.log(this.url);
     console.log(this.params);
     console.log(this.async);
-
+    var access_token =  this.params.accessToken;
+    var request_url = this.url;
+    if(request_url.indexOf('?')===-1){
+        request_url+="?access_token="+access_token;
+    }else{
+        request_url+="&access_token="+access_token;
+    }
+    console.log(request_url);
     $.ajax({
         //请求方式
         type: "GET",
         //请求的媒体类型
         contentType: "application/x-www-form-urlencoded",
         //请求地址
-        url: this.url,
+        url: request_url,
+        beforeSend: function(request) {
+            request.setRequestHeader("Authorization",  access_token);
+        },
         // 数据，json字符串
         data: this.params,
         async: this.async,
