@@ -332,39 +332,28 @@
     };
 
     function deleteObj(id) {
-        $.ajax({
-            //请求方式
-            type: "PUT",
-            //请求的媒体类型
-            contentType: "application/x-www-form-urlencoded",
-            async: false,
-            //请求地址
-            url: "http://127.0.0.1:8095/article/delete",
-            //数据，json字符串
-            data: {
-                articleId: id
-            },
-            //请求成功
-            success: function (result) {
-                var code = result.code;
-                var msg = result.msg;
-                if (code === 1000) {
-                    alert('操作成功');
-                    dataLoad('');
-                    $paginationComponent.reload()
-                } else {
-                    alert(msg);
-                    console.log(msg);
-                }
 
-
+        var url = "http://127.0.0.1:8095/article/delete";
+        var $request = new request({
+            url: url,
+            params: {
+                id: id
             },
-            //请求失败，包含具体的错误信息
-            error: function (e) {
-                console.log(e.status);
-                console.log(e.responseText);
+            async: false
+        });
+        $request.put(function (result) {
+            var code = result.code;
+            var msg = result.msg;
+            if (code === 1000) {
+                alert('操作成功');
+                dataLoad('');
+                $paginationComponent.reload()
+            } else {
+                alert(msg);
+                console.log(msg);
             }
         });
+
     };
 
     function getDetail(id) {
