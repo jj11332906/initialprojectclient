@@ -118,11 +118,20 @@
                   var msg = result.msg;
                   if(code === 1000){
                       var access_token = result.data.access_token;
+                      var username = result.data.username;
+                      var authority = result.data.authority;
+                      console.log(authority);
                       if (window.localStorage) {
                           console.log('This browser supports localStorage');
                           window.localStorage.setItem('access_token',access_token);
+                          window.localStorage.setItem('username',username);
+                          window.localStorage.setItem('authority',authority);
                           var access_token = window.localStorage.getItem('access_token');
+                          var username = window.localStorage.getItem('username');
+                          var authority = window.localStorage.getItem('authority');
                           console.log('access_token in localStorage:'+access_token);
+                          console.log('username:'+username);
+                          console.log('authority:'+authority);
                           alert(msg);
                       $(location).attr('href',"articleMng.html");
                       } else {
