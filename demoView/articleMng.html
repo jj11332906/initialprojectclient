@@ -88,7 +88,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="#"><i class="icon-user"></i> Profile</a></li>
                         <li><a href="#"><i class="icon-cogs"></i> Settings</a></li>
-                        <li><a href="login.html"><i class="icon-off"></i> Logout</a></li>
+                        <li><a href="#1" onclick="logout()"><i class="icon-off"></i> Logout</a></li>
                     </ul>
                 </li>
 
@@ -289,6 +289,12 @@
     var $paginationComponent;
     var $menuComponent;
 
+
+    function logout() {
+
+        var $request = new request();
+        $request.logout();
+    };
 
     function dataLoad(q) {
         var url = "http://127.0.0.1:8095/article/query";
