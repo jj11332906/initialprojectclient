@@ -285,7 +285,7 @@
     var $paginationComponent;
     var $menuComponent;
     // 每个文件切片大小定为1MB .
-    var bytesPerPiece = 1024 * 1024;
+    var bytesPerPiece = 1024 * 1024 * 5;
     var totalPieces;
 
     function logout() {
@@ -310,7 +310,7 @@
         });
         document.getElementById("tb").innerHTML = "";
         $request.get(function (tableData) {
-            console.log(tableData);
+//            console.log(tableData);
             var h = "";
             for (var i = 0; i < tableData.length; i++) {
                 var dataObj = tableData[i];
@@ -356,7 +356,7 @@
                 $paginationComponent.reload()
             } else {
                 alert(msg);
-                console.log(msg);
+//                console.log(msg);
             }
         });
 
@@ -390,7 +390,12 @@
 
         });
     };
-
+    function sleep(delay) {
+        var start = (new Date()).getTime();
+        while ((new Date()).getTime() - start < delay) {
+            continue;
+        }
+    }
     //todo 上传文件
     function upload() {
 
@@ -407,7 +412,10 @@
 
         while(start < filesize) {
 
-            alert("123");
+            if(index%5===0){
+//                sleep(1000);
+            }
+//            alert("123");
             end = start + bytesPerPiece;
 
             if(end > filesize) {
@@ -422,7 +430,7 @@
 
             var chunk = blob.slice(start,end);//切割文件
             var sliceIndex= filename + index;
-            console.log(sliceIndex);
+//            console.log(sliceIndex);
             var formData = new FormData();
             formData.append("file", chunk, filename);
             formData.append("chunk", index);
@@ -509,7 +517,7 @@
                     $("#myModal").modal('hide');
                 } else {
                     alert(msg);
-                    console.log(msg);
+//                    console.log(msg);
                 }
             });
 
@@ -542,7 +550,7 @@
                     $("#myModal").modal('hide');
                 } else {
                     alert(msg);
-                    console.log(msg);
+//                    console.log(msg);
                 }
             });
         };
