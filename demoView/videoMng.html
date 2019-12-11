@@ -273,9 +273,11 @@
 
 <script src="../js/util/menuJs.js"></script> <!-- menuJs -->
 
-<script src="../js/util/request.js"></script> <!-- menuJs -->
+<script src="../js/util/request.js"></script> <!-- requestJs -->
 
-<script src="../js/util/authority.js"></script> <!-- menuJs -->
+<script src="../js/util/authority.js"></script> <!-- authorityJs -->
+
+<script src="../js/util/md5.js"></script> <!-- md5Js -->
 <script>
 
     var pageNum = 1;
@@ -391,40 +393,39 @@
 
     //todo 上传文件
     function upload() {
+
         var blob = document.getElementById("file").files[0];
         var start = 0;
         var end;
         var index = 0;
         var filesize = blob.size;
         var filename = blob.name;
-        var taskId = '';
-        var i=0;
+        var taskId = hex_md5(filename);
+
         //计算文件切片总数
         totalPieces = Math.ceil(filesize / bytesPerPiece);
 
         while(start < filesize) {
 
-
+            alert("123");
             end = start + bytesPerPiece;
 
             if(end > filesize) {
                 end = filesize;
 
             }
-
-            console.log("i:"+i);
             console.log("start:"+start);
             console.log("end:"+end);
             console.log("filesize:"+filesize);
             console.log("taskId:"+taskId);
-            var size = end - start;
+//            var size = end - start;
 
             var chunk = blob.slice(start,end);//切割文件
-            var sliceIndex= blob.name + index;
+            var sliceIndex= filename + index;
             console.log(sliceIndex);
             var formData = new FormData();
             formData.append("file", chunk, filename);
-            formData.append("chunk", i++);
+            formData.append("chunk", index);
             formData.append("size", bytesPerPiece);
             formData.append("fileSize", filesize);
             formData.append("chunkTotal", totalPieces);
@@ -442,10 +443,10 @@
                 //请求成功
                 success: function (result) {
                     var code = result.code;
-                    taskId = result.data;
+//                    taskId = result.data;
 
                     console.log(code);
-                    console.log(taskId);
+//                    console.log(taskId);
 
                 },
                 //请求失败，包含具体的错误信息
@@ -457,6 +458,7 @@
             start = end;
             index++;
         }
+
     }
 
     $(function () {
@@ -562,6 +564,7 @@
 
         //todo 上传按钮
         $("#btn-upload").on('click', function (e) {
+
             upload();
         });
 
