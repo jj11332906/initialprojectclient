@@ -415,9 +415,7 @@
             if(index%5===0){
 //                sleep(1000);
             }
-//            alert("123");
             end = start + bytesPerPiece;
-
             if(end > filesize) {
                 end = filesize;
 
@@ -427,7 +425,6 @@
             console.log("filesize:"+filesize);
             console.log("taskId:"+taskId);
 //            var size = end - start;
-
             var chunk = blob.slice(start,end);//切割文件
             var sliceIndex= filename + index;
 //            console.log(sliceIndex);
