@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <!-- Title and other stuffs -->
+    <title>报名表单模板管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="">
+    <!-- Stylesheets -->
+    <link href="../bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
+    <!-- Font awesome icon -->
+    <link rel="stylesheet" href="../style/font-awesome.min.css">
+    <!-- bootstrap-treeview -->
+    <link rel="stylesheet" href="../style/css/bootstrap-treeview.css">
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="../style/jquery-ui.css">
+
+    <!-- Main stylesheet -->
+    <link href="../style/style.css" rel="stylesheet">
+    <!-- Widgets stylesheet -->
+    <link href="../style/widgets.css" rel="stylesheet">
+
+    <!-- combobox -->
+    <link href="../style/css/bootstrap-combobox.css" rel="stylesheet">
+
+    <!-- HTML5 Support for IE -->
+    <!--[if lt IE 9]>
+    <script src="../js/html5shim.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top bs-docs-nav" role="banner">
+
+    <div class="conjtainer">
+        <!-- Menu button for smallar screens -->
+        <div class="navbar-header">
+            <button class="navbar-toggle btn-navbar" type="button" data-toggle="collapse"
+                    data-target=".bs-navbar-collapse">
+                <span>Menu</span>
+            </button>
+            <!-- Site name for smallar screens -->
+            <a href="login.html" class="navbar-brand hidden-lg">MacBeth</a>
+        </div>
+
+
+        <!-- Navigation starts -->
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+
+            <ul class="nav navbar-nav">
+
+                <!-- Upload to server link. Class "dropdown-big" creates big dropdown -->
+                <li class="dropdown dropdown-big">
+                    <a href="#" class="dropdown-toggle"><span class="label label-success"><i
+                            class="icon-cloud-upload"></i></span> 后台管理系统</a>
+                    <!-- Dropdown -->
+                    <ul class="dropdown-menu">
+                        <li>
+                            <!-- Progress bar -->
+                            <p>
+                                企业简介:无锡红光标牌有限公司是一家集研发、生产、销售和服务于一体的专业标牌生产厂家。注册资金500万人民币。主要生产塑料基材、软塑透明树脂、金属、模内复合等标牌产品，洗衣机顶盖板总成，平衡板，以及塑印、彩印、顶盖板、吸音垫等产品。公司位于长江三角洲经济快速增长、风景秀丽的太湖之畔——无锡。
+                                公司自1984年成立至今，已经过了3次跨越式的发展。2004年至今公司投入5000多万元资金建设新的生产基地，目前已竣工并投入生产，占地面积达40000m2，厂房面积近15000m2。公司2004年的年产值达4350多万元，并且每年以平均30%的速度快速增长。目前，本公司的产品已具备国际及国内多项质量认证证书，并为知名家用电器企业：小天鹅电器有限公司、三星电子有限公司、海尔集团、惠尔普等配套生产各类标牌。可以说客户是我们的老师，和他们合作使我们得到很多的学习机会来提高自身的技术水平和管理水平，是我们生产和发展的动力。
+                                公司本着“千方百计生产出满足顾客期望和要求的产品”的宗旨，坚持“工厂出产的不仅仅是产品，更重要的是信誉和质量”的经营理念，不断吸收新技术、引进新设备，使公司的经济效益蒸蒸日上。相信公司将会永不停止探索和发展的脚步，和中国国内以及世界国际性大公司同步发展。</p>
+
+
+                            <hr/>
+
+
+                        </li>
+                    </ul>
+                </li>
+
+
+            </ul>
+
+
+            <!-- Links -->
+            <ul class="nav navbar-nav pull-right">
+                <li class="dropdown pull-right">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <i class="icon-user"></i> Admin <b class="caret"></b>
+                    </a>
+
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><i class="icon-user"></i> Profile</a></li>
+                        <li><a href="#"><i class="icon-cogs"></i> Settings</a></li>
+                        <li><a href="#1" onclick="logout()"><i class="icon-off"></i> Logout</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+
+    </div>
+</div>
+
+<header>
+    <div class="container">
+
+    </div>
+</header>
+<!-- Main content starts -->
+
+<div class="content">
+
+    <!--todo 菜单部分 -->
+    <div class="sidebar">
+
+        <!--- Sidebar navigation -->
+        <!-- If the main navigation has sub navigation, then add the class "has_sub" to "li" of main navigation. -->
+        <ul id="nav">
+            <!-- Main menu with font awesome icon -->
+
+        </ul>
+    </div>
+    <!-- 菜单部分 ends -->
+
+    <!--todo 查询表单和数据列表 -->
+    <div class="mainbar">
+        <div class="matter">
+            <div class="container">
+                <!--todo 查询表单 -->
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="widget">
+                            <div class="widget-head">
+                                <div class="pull-left">查询</div>
+                                <div class="widget-icons pull-right">
+                                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="widget-content">
+                                <div class="padd">
+
+                                    <div class="form quick-post">
+                                        <!-- Edit profile form (not working)-->
+                                        <form class="form-horizontal" id="queryForm">
+                                            <!-- Title -->
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-6" for="queryTitle">模板名称</label>
+                                                <div class="col-lg-6">
+                                                    <input type="text" class="form-control" id="queryTitle">
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <button type="button" class="btn btn-success" id="btn-query">搜索
+                                                    </button>
+                                                    <!--<button type="button" class="btn btn-danger">新增</button>-->
+                                                    <a href="#myModal" class="btn btn-info" data-toggle="modal">新增</a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--todo 数据表格 -->
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="widget-content">
+
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>模板ID</th>
+                                    <th>模板名称</th>
+                                    <th>创建人</th>
+                                    <th>创建时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tb">
+
+                                </tbody>
+                            </table>
+
+                            <div class="widget-foot">
+
+
+                                <ul class="pagination pull-right" id="paginationComponent">
+
+                                </ul>
+
+                                <div class="clearfix"></div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--todo 查询表单和数据列表 ends -->
+
+    <div class="clearfix"></div>
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">编辑窗口</h4>
+                </div>
+                <div class="modal-body">
+                    <hr/>
+                    <!-- Form starts.  -->
+                    <form class="form-horizontal" role="form" id="userForm">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">模板ID</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" placeholder="类别ID" id="id" readonly="readonly">
+                            </div>
+                        </div>
+
+                        <div class="form-group"  id="groupNameDiv">
+                            <label class="col-lg-4 control-label">模板名称</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" placeholder="类别名称" id="title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">备注</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" rows="3" placeholder="备注" id="remark"></textarea>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="btn-test">测试</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+                    <button type="button" class="btn btn-primary" id="btn-save">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--todo 编辑表单元素 start -->
+    <div id="editFormElementModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">编辑窗口</h4>
+                </div>
+                <div class="modal-body">
+                    <hr/>
+                    <!-- Form starts.  -->
+                    <form class="form-horizontal" role="form">
+                        <div class="panel panel-primary">
+
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label">元素名</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label">元素编码</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label">元素类型</label>
+                                    <div class="col-lg-8">
+                                        <input type='checkbox' value='check1' />文本框
+                                        <input type='checkbox' value='check2' />单选
+                                        <input type='checkbox' value='check1' />多选
+                                        <input type='checkbox' value='check1' />下拉
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label">元素值</label>
+                                    <div class="col-lg-6" align="inline" >
+                                        <input type="text" class="form-control">
+
+                                    </div>
+                                    <div class="col-lg-2" align="inline" >
+
+                                        <i class="icon-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-minus"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer" align="right">
+                                <button type="button" class="btn btn-default" id="btn-add-asc">升序</button>
+                                <button type="button" class="btn btn-default" id="btn-add-desc">降序</button>
+                                <button type="button" class="btn btn-default" id="btn-add-delete">删除</button>
+                            </div>
+                        </div>
+                        <div class="panel panel-primary">
+
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label">元素名</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label">元素编码</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label">元素类型</label>
+                                    <div class="col-lg-8">
+                                        <input type='checkbox' value='check1' />文本框
+                                        <input type='checkbox' value='check2' />单选
+                                        <input type='checkbox' value='check1' />多选
+                                        <input type='checkbox' value='check1' />下拉
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label">元素值</label>
+                                    <div class="col-lg-6" align="inline" >
+                                        <input type="text" class="form-control">
+
+                                    </div>
+                                    <div class="col-lg-2" align="inline" >
+
+                                        <i class="icon-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-minus"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer" align="right">
+                                <button type="button" class="btn btn-default" id="btn-add-asc">升序</button>
+                                <button type="button" class="btn btn-default" id="btn-add-desc">降序</button>
+                                <button type="button" class="btn btn-default" id="btn-add-delete">删除</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="btn-add-element">添加元素</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+                    <button type="button" class="btn btn-primary" id="btn-save-element">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--todo 编辑表单元素 end -->
+</div>
+<!-- Content ends -->
+
+
+<!-- JS -->
+<script src="../js/jquery.js"></script> <!-- jQuery -->
+<script src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script> <!-- Bootstrap -->
+<script src="../js/jquery-ui-1.9.2.custom.min.js"></script> <!-- jQuery UI -->
+
+<script src="../js/fullcalendar.min.js"></script> <!-- Full Google Calendar - Calendar -->
+<script src="../js/jquery.prettyPhoto.js"></script> <!-- prettyPhoto -->
+
+<script src="../js/sparklines.js"></script> <!-- Sparklines -->
+<script src="../js/jquery.cleditor.min.js"></script> <!-- CLEditor -->
+<script src="../js/bootstrap-datetimepicker.min.js"></script> <!-- Date picker -->
+<script src="../js/bootstrap-switch.min.js"></script> <!-- Bootstrap Toggle -->
+<script src="../js/filter.js"></script> <!-- Filter for support page -->
+<script src="../js/custom.js"></script> <!-- Custom codes -->
+
+
+<script src="../js/util/pagenationJs.js"></script> <!-- pagination -->
+<script src="../js/bootstrap-combobox.js"></script> <!-- Combobox -->
+
+<script src="../js/util/menuJs.js"></script> <!-- menuJs -->
+
+<script src="../js/util/request.js"></script> <!-- menuJs -->
+
+<script src="../js/util/authority.js"></script> <!-- menuJs -->
+<script>
+
+    var pageNum = 1;
+    var pageSize = 10;
+    var $paginationComponent;
+    var $menuComponent;
+
+
+    function logout() {
+
+        var $request = new request();
+        $request.logout();
+    };
+
+    function dataLoad(q) {
+//        var url = "http://127.0.0.1:8095/article/query";
+//        if (q !== '') {
+//            url += '?' + q;
+//        }
+//        var $request = new request({
+//
+//            url: url,
+//            params: {
+//                pageSize: pageSize,
+//                pageNum: pageNum
+//            },
+//            async: false
+//        });
+//        document.getElementById("tb").innerHTML = "";
+//        $request.get(function (tableData) {
+        var tableData = [{id:1,title:"2019'学会杯'第五届四川省青少年钢琴大赛【决赛】报名表-外地赛区用报名表单模板",creator:"admin",createDateStr:"2019-12-24"},
+            {id:2,title:"2019'学会杯'第三届四川省青少年小提琴大赛【决赛】报名表-外地赛区用报名表单模板",creator:"admin",createDateStr:"2019-12-24"},
+            {id:3,title:"2019'学会杯'第五届四川省青少年古筝大赛【决赛】报名表-外地赛区用报名表单模板",creator:"admin",createDateStr:"2019-12-24"},
+            {id:4,title:"2019'学会杯'第二届四川省青少年钢琴大赛【决赛】报名表-外地赛区用报名表单模板",creator:"admin",createDateStr:"2019-12-24"}];
+        console.log(tableData);
+        var h = "";
+        for (var i = 0; i < tableData.length; i++) {
+            var dataObj = tableData[i];
+
+            var id = dataObj.id;
+            var title = dataObj.title;
+            var creator = dataObj.creator;
+            var createDate = dataObj.createDateStr;
+
+
+
+            h += "<tr>";
+            h += "<td>" + id + "</td>";
+            h += "<td>" + title + "</td>";
+            h += "<td>" + creator + "</td>";
+            h += "<td>" + createDate + "</td>";
+
+            h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"getDetail(" + id + ")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
+                "<button type=\"button\" class=\"btn btn-primary\" authority=\"articleDelete\" onclick=\"deleteObj(" + id + ")\" >删除</button>&nbsp;&nbsp;&nbsp;&nbsp;" +
+                "<a href=\"#updateFormElementModal\" class=\"btn btn-warning\" data-toggle=\"modal\"  onclick=\"updateFormElementModal(" + id + ")\">编辑表单元素</a>" +
+                "</td>";
+            h += "</tr>";
+        }
+
+        document.getElementById("tb").innerHTML = h;
+//        });
+    };
+
+    function deleteObj(id) {
+
+//        var url = "http://127.0.0.1:8095/article/delete";
+//        var $request = new request({
+//            url: url,
+//            params: {
+//                id: id
+//            },
+//            async: false
+//        });
+//        $request.put(function (result) {
+//            var code = result.code;
+//            var msg = result.msg;
+//            if (code === 1000) {
+//                alert('操作成功');
+//                dataLoad('');
+//                $paginationComponent.reload()
+//            } else {
+//                alert(msg);
+//                console.log(msg);
+//            }
+//        });
+
+    };
+
+    function updateFormElementModal(id){
+
+        $("#editFormElementModal").modal('show');
+    }
+
+    function getDetail(id) {
+
+//        var url = "http://127.0.0.1:8095/article/find/" + id;
+//
+//        var $request = new request({
+//
+//            url: url,
+//            params: {
+//            },
+//            async: false
+//        });
+//        $request.get(function (dataObj) {
+        var dataObj = {id:1,title:"舞蹈类",creator:"admin",createDate:"2019-12-24"};
+        var id = dataObj.id;
+        var title = dataObj.title;
+        var remark = dataObj.remark;
+        var creator = dataObj.creator;
+
+        $("#id").val(id);
+        $("#title").val(title);
+        $("#remark").val(remark);
+
+        $("#myModal").modal('show');
+
+//        });
+    };
+
+
+    $(function () {
+
+        //todo 初始化分页组件
+        $paginationComponent = new page(
+            {
+                id: 'paginationComponent',
+                nowNum: 1,
+                allNumUrl: "http://127.0.0.1:8095/article/totalPage",
+                isParam: false,
+                pageSize: pageSize,
+                dataMethod: 'dataLoad',
+                queryForm: ['queryTitle'],
+                callback: function (now, all) {
+                    pageNum = now;
+                }
+            }
+        );
+        //todo 初始化菜单组件
+        $menuComponent = new menu(
+            {
+                id: 'nav',
+                currentMenuName: '比赛类别'
+            }
+        );
+        //todo 加载列表数据
+        dataLoad('');
+
+        //todo 定义添加功能
+        var add = function () {
+//            var title = $("#title").val();
+//            var remark = $("#remark").val();
+//            var url = "http://127.0.0.1:8095/article/add";
+//            var $request = new request({
+//                url: url,
+//                params: {
+//                    title: title,
+//                    content: content,
+//                    remark: remark
+//                },
+//                async: false
+//            });
+//            $request.post(function (result) {
+//                var code = result.code;
+//                var msg = result.msg;
+//                if (code === 1000) {
+//                    alert('操作成功');
+//                    dataLoad('');
+//                    $paginationComponent.reload();
+//                    $("#myModal").modal('hide');
+//                } else {
+//                    alert(msg);
+//                    console.log(msg);
+//                }
+//            });
+
+        };
+
+        //todo 定义修改功能
+        var update = function () {
+
+//            var id = $("#id").val();
+//            var title = $("#title").val();
+//            var content = $("#content").val();
+//            var remark = $("#remark").val();
+//
+//            var url = "http://127.0.0.1:8095/article/put/"+id;
+//            var $request = new request({
+//                url: url,
+//                params: {
+//                    title: title,
+//                    content: content,
+//                    remark: remark
+//                },
+//                async: false
+//            });
+//            $request.put(function (result) {
+//                var code = result.code;
+//                var msg = result.msg;
+//                if (code === 1000) {
+//                    alert('操作成功');
+//                    dataLoad('');
+//                    $("#myModal").modal('hide');
+//                } else {
+//                    alert(msg);
+//                    console.log(msg);
+//                }
+//            });
+        };
+
+        //todo 点击保存账号按钮
+        $('#btn-save').on('click', function (e) {
+            $('#btn-save').prop('disabled', false);
+            var id = $("#id").val();
+            if(id === null||id ==='') {
+                add();
+            }else{
+                update();
+            }
+        });
+        //todo 搜索按钮
+        $("#btn-query").on('click', function (e) {
+//            var queryTitle = $("#queryTitle").val();
+//
+//            var timestamp = Date.parse(new Date());
+//            var q = "ts=" + timestamp;
+//
+//            if (queryTitle !== '' && queryTitle !== null){
+//                q += "&queryTitle=" + queryTitle;
+//            }
+//            if (queryTitle === '' || queryTitle === null) {
+//                $paginationComponent.init(false);
+//            } else {
+//                $paginationComponent.init(true);
+//            }
+//
+//            dataLoad(q);
+        });
+
+        //todo 界面调试按钮,测试辅助
+        $("#btn-test").on('click',function (e){
+        });
+
+        //todo 添加角色框监听打开关闭时间
+        $('#myModal').on('show.bs.modal', function () {
+            $('#btn-save').prop('disabled', false);
+        });
+        $('#myModal').on('hidden.bs.modal', function () {
+            $("#id").val('');
+            $("#title").val('');
+            $("#content").val('');
+            $("#remark").val('');
+        });
+        //todo 权限检测
+        checkAuth();
+    });
+
+</script>
+</body>
+</html>
