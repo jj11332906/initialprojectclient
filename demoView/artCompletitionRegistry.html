@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <!-- Title and other stuffs -->
-    <title>艺术比赛报名表单模板管理</title>
+    <title>艺术比赛报名管理</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="">
     <!-- Stylesheets -->
@@ -143,7 +143,7 @@
                                         <form class="form-horizontal" id="queryForm">
                                             <!-- Title -->
                                             <div class="form-group">
-                                                <label class="control-label col-lg-6" for="queryTitle">模板名称</label>
+                                                <label class="control-label col-lg-6" for="queryTitle">比赛名称</label>
                                                 <div class="col-lg-6">
                                                     <input type="text" class="form-control" id="queryTitle">
                                                 </div>
@@ -152,6 +152,8 @@
                                                     </button>
                                                     <!--<button type="button" class="btn btn-danger">新增</button>-->
                                                     <a href="#myModal" class="btn btn-info" data-toggle="modal">新增</a>
+                                                    <button type="button" class="btn btn-warning" id="btn-export">导出
+                                                    </button>
                                                 </div>
                                             </div>
                                         </form>
@@ -168,14 +170,21 @@
 
                     <div class="col-md-12">
                         <div class="widget-content">
-
+                            <div style="width: 1200px">
                             <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th>模板ID</th>
-                                    <th>模板名称</th>
-                                    <th>创建人</th>
-                                    <th>创建时间</th>
+                                    <th width="80px">会员电话</th>
+                                    <th width="110px">会员姓名</th>
+                                    <th width="110px">比赛名称</th>
+                                    <th width="40px">ID</th>
+                                    <th width="110px">参赛者姓名</th>
+                                    <th width="80px">参赛者电话</th>
+                                    <th width="110px">参赛者身份证号</th>
+                                    <th width="110px">审核状态</th>
+                                    <th>支付凭证下载</th>
+                                    <th>支付状态</th>
+                                    <th>报名时间</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -183,17 +192,18 @@
 
                                 </tbody>
                             </table>
+                                <div class="widget-foot">
 
-                            <div class="widget-foot">
 
+                                    <ul class="pagination pull-right" id="paginationComponent">
 
-                                <ul class="pagination pull-right" id="paginationComponent">
+                                    </ul>
 
-                                </ul>
+                                    <div class="clearfix"></div>
 
-                                <div class="clearfix"></div>
-
+                                </div>
                             </div>
+
 
                         </div>
                     </div>
@@ -217,144 +227,175 @@
                     <!-- Form starts.  -->
                     <form class="form-horizontal" role="form" id="userForm">
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">模板ID</label>
+                            <label class="col-lg-4 control-label">报名ID</label>
                             <div class="col-lg-8">
                                 <input type="text" class="form-control" placeholder="类别ID" id="id" readonly="readonly">
                             </div>
                         </div>
 
-                        <div class="form-group"  id="groupNameDiv">
-                            <label class="col-lg-4 control-label">模板名称</label>
+                        <div class="form-group" >
+                            <label class="col-lg-4 control-label">会员姓名</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control" placeholder="类别名称" id="title">
+                                <input type="text" class="form-control" placeholder="会员姓名" id="memberName">
                             </div>
                         </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">会员联系电话</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" placeholder="会员联系电话" id="memberPhone">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">比赛名称</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" placeholder="比赛名称" id="completitionName">
+                            </div>
+                        </div>
+                        <hr/>
+                        <h4>以下为参赛者信息</h4>
+                        <hr/>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">姓名</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">头像</label>
+                            <div class="col-lg-8">
+                                <img src="../img/demo/tx.jpg" width="100">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">年龄</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">国籍</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">出生日期</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">所在地区</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">就读学校</label>
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">联系电话</label>
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">身份证号</label>
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">指导教师</label>
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">教师电话</label>
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">组别年龄</label>
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">项目类别</label>
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">参赛作品</label>
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+
                         <div class="form-group">
-                            <label class="col-lg-4 control-label">备注</label>
+                            <label class="col-lg-4 control-label">简介及获奖经历</label>
                             <div class="col-lg-8">
                                 <textarea class="form-control" rows="3" placeholder="备注" id="remark"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">审核状态</label>
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">审核时间</label>
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">是否已上传支付凭证</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">支付凭证</label>
+                            <div class="col-lg-8">
+                                <img src="../img/demo/pz.jpeg" width="100">
+                            </div>
+                        </div>
+                        <div class="form-group"  >
+                            <label class="col-lg-4 control-label">支付状态</label>
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control">
                             </div>
                         </div>
                     </form>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" id="btn-test">测试</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
                     <button type="button" class="btn btn-primary" id="btn-save">保存</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <!--todo 编辑表单元素 start -->
-    <div id="editFormElementModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">编辑窗口</h4>
-                </div>
-                <div class="modal-body">
-                    <hr/>
-                    <!-- Form starts.  -->
-                    <form class="form-horizontal" role="form">
-                        <div class="panel panel-primary">
-
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">元素名</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">元素编码</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">元素类型</label>
-                                    <div class="col-lg-8">
-                                        <input type='checkbox' value='check1' />文本框
-                                        <input type='checkbox' value='check2' />单选
-                                        <input type='checkbox' value='check1' />多选
-                                        <input type='checkbox' value='check1' />下拉
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">元素值</label>
-                                    <div class="col-lg-6" align="inline" >
-                                        <input type="text" class="form-control">
-
-                                    </div>
-                                    <div class="col-lg-2" align="inline" >
-
-                                        <i class="icon-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-minus"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-footer" align="right">
-                                <button type="button" class="btn btn-default" id="btn-add-asc-1">升序</button>
-                                <button type="button" class="btn btn-default" id="btn-add-desc-1">降序</button>
-                                <button type="button" class="btn btn-default" id="btn-add-delete-1">删除</button>
-                            </div>
-                        </div>
-                        <div class="panel panel-primary">
-
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">元素名</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">元素编码</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">元素类型</label>
-                                    <div class="col-lg-8">
-                                        <input type='checkbox' value='check1' />文本框
-                                        <input type='checkbox' value='check2' />单选
-                                        <input type='checkbox' value='check1' />多选
-                                        <input type='checkbox' value='check1' />下拉
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label">元素值</label>
-                                    <div class="col-lg-6" align="inline" >
-                                        <input type="text" class="form-control">
-
-                                    </div>
-                                    <div class="col-lg-2" align="inline" >
-
-                                        <i class="icon-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-minus"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-footer" align="right">
-                                <button type="button" class="btn btn-default" id="btn-add-asc-2">升序</button>
-                                <button type="button" class="btn btn-default" id="btn-add-desc-2">降序</button>
-                                <button type="button" class="btn btn-default" id="btn-add-delete-2">删除</button>
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" id="btn-add-element">添加元素</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
-                    <button type="button" class="btn btn-primary" id="btn-save-element">保存</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--todo 编辑表单元素 end -->
 </div>
 <!-- Content ends -->
 
@@ -398,6 +439,7 @@
     };
 
     function dataLoad(q) {
+
 //        var url = "http://127.0.0.1:8095/article/query";
 //        if (q !== '') {
 //            url += '?' + q;
@@ -413,31 +455,69 @@
 //        });
 //        document.getElementById("tb").innerHTML = "";
 //        $request.get(function (tableData) {
-        var tableData = [{id:1,title:"2019'学会杯'第五届四川省青少年钢琴大赛【决赛】报名表-外地赛区用报名表单模板",creator:"admin",createDateStr:"2019-12-24"},
-            {id:2,title:"2019'学会杯'第三届四川省青少年小提琴大赛【决赛】报名表-外地赛区用报名表单模板",creator:"admin",createDateStr:"2019-12-24"},
-            {id:3,title:"2019'学会杯'第五届四川省青少年古筝大赛【决赛】报名表-外地赛区用报名表单模板",creator:"admin",createDateStr:"2019-12-24"},
-            {id:4,title:"2019'学会杯'第二届四川省青少年钢琴大赛【决赛】报名表-外地赛区用报名表单模板",creator:"admin",createDateStr:"2019-12-24"}];
+
+        var tableData = [
+            {
+                memberTel:15842443212,memberName:"张艺琳",competitionName:"2019'学会杯'第五届四川省青少年钢琴大赛【决赛】",registryId:"1",registerName:"张琳",
+                registerTel:13478554234,registerImg:"../img/demo/tx.jpg",registerNo:"210802199304032182",reviewStatus:"待审核",paymentAttachment:"未上传支付凭证",paymentStatus:"待支付",
+                registerDate:'2019-10-24'
+            },
+            {
+                memberTel:15842443212,memberName:"张艺琳",competitionName:"2019'学会杯'第五届四川省青少年钢琴大赛【决赛】",registryId:"1",registerName:"张琳",
+                registerTel:13478554234,registerImg:"../img/demo/tx.jpg",registerNo:"210802199304032182",reviewStatus:"审核通过",paymentAttachment:"未上传支付凭证",paymentStatus:"待支付",
+                registerDate:'2019-10-24'
+            },
+            {
+                memberTel:15842443212,memberName:"张艺琳",competitionName:"2019'学会杯'第五届四川省青少年钢琴大赛【决赛】",registryId:"1",registerName:"张琳",
+                registerTel:13478554234,registerImg:"../img/demo/tx.jpg",registerNo:"210802199304032182",reviewStatus:"审核通过",paymentAttachment:"../img/demo/pz.jpeg",paymentStatus:"待支付",
+                registerDate:'2019-10-24'
+            },
+            {
+                memberTel:15842443212,memberName:"张艺琳",competitionName:"2019'学会杯'第五届四川省青少年钢琴大赛【决赛】",registryId:"1",registerName:"张琳",
+                registerTel:13478554234,registerImg:"../img/demo/tx.jpg",registerNo:"210802199304032182",reviewStatus:"审核通过",paymentAttachment:"../img/demo/pz.jpeg",paymentStatus:"已支付",
+                registerDate:'2019-10-24'
+            }
+          ];
         console.log(tableData);
         var h = "";
         for (var i = 0; i < tableData.length; i++) {
             var dataObj = tableData[i];
 
-            var id = dataObj.id;
-            var title = dataObj.title;
-            var creator = dataObj.creator;
-            var createDate = dataObj.createDateStr;
+            var memberTel = dataObj.memberTel;
+            var memberName = dataObj.memberName;
+            var competitionName = dataObj.competitionName;
+            var registryId = dataObj.registryId;
+            var registerName = dataObj.registerName;
+            var registerTel = dataObj.registerTel;
+            var registerImg = dataObj.registerImg;
+            var registerNo = dataObj.registerNo;
+            var reviewStatus = dataObj.reviewStatus;
+            var paymentAttachment = dataObj.paymentAttachment;
+            var paymentStatus = dataObj.paymentStatus;
+            var registerDate = dataObj.registerDate;
 
 
 
             h += "<tr>";
-            h += "<td>" + id + "</td>";
-            h += "<td>" + title + "</td>";
-            h += "<td>" + creator + "</td>";
-            h += "<td>" + createDate + "</td>";
+            h += "<td>" + memberTel + "</td>";
+            h += "<td>" + memberName + "</td>";
+            h += "<td>" + competitionName + "</td>";
+            h += "<td>" + registryId + "</td>";
+            h += "<td>" + registerName + "</td>";
+            h += "<td>" + registerTel + "</td>";
+            h += "<td>" + registerNo + "</td>";
+            h += "<td>" + reviewStatus + "</td>";
+            if(paymentAttachment === "未上传支付凭证"){
+                h += "<td>" + paymentAttachment + "</td>";
+            }else{
+                h += "<td> <a href= '"+paymentAttachment+"'>下载</a> </td>";
+            }
+            h += "<td>" + paymentStatus + "</td>";
+            h += "<td>" + registerDate + "</td>";
 
-            h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"getDetail(" + id + ")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
-                "<button type=\"button\" class=\"btn btn-primary\" authority=\"articleDelete\" onclick=\"deleteObj(" + id + ")\" >删除</button>&nbsp;&nbsp;&nbsp;&nbsp;" +
-                "<a href=\"#updateFormElementModal\" class=\"btn btn-warning\" data-toggle=\"modal\"  onclick=\"updateFormElementModal(" + id + ")\">编辑表单元素</a>" +
+            h += "<td><a href=\"#updateModal\" class=\"btn btn-info\" data-toggle=\"modal\"  onclick=\"getDetail(" + registryId + ")\">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
+                "<a href=\"#\" class=\"btn btn-warning\" data-toggle=\"modal\"  onclick=\"confirmPayment(" + registryId + ")\">确认收款</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
+                "<a href=\"#\" class=\"btn btn-warning\" data-toggle=\"modal\"  onclick=\"downloadExcel(" + registryId + ")\">下载</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
                 "</td>";
             h += "</tr>";
         }
@@ -445,8 +525,11 @@
         document.getElementById("tb").innerHTML = h;
 //        });
     };
+    function downloadExcel(id) {
 
-    function deleteObj(id) {
+    }
+
+    function confirmPayment(id) {
 
 //        var url = "http://127.0.0.1:8095/article/delete";
 //        var $request = new request({
@@ -471,10 +554,6 @@
 
     };
 
-    function updateFormElementModal(id){
-
-        $("#editFormElementModal").modal('show');
-    }
 
     function getDetail(id) {
 
@@ -488,15 +567,23 @@
 //            async: false
 //        });
 //        $request.get(function (dataObj) {
-        var dataObj = {id:1,title:"舞蹈类",creator:"admin",createDate:"2019-12-24"};
-        var id = dataObj.id;
-        var title = dataObj.title;
-        var remark = dataObj.remark;
-        var creator = dataObj.creator;
-
-        $("#id").val(id);
-        $("#title").val(title);
-        $("#remark").val(remark);
+        var dataObj =  {
+            memberTel:15842443212,memberName:"张艺琳",competitionName:"2019'学会杯'第五届四川省青少年钢琴大赛【决赛】",registryId:"1",registerName:"张琳",
+            registerTel:13478554234,registerImg:"../img/demo/tx.jpg",registerNo:"210802199304032182",reviewStatus:"审核通过",paymentAttachment:"../img/demo/pz.jpeg",paymentStatus:"已支付",
+            registerDate:'2019-10-24'
+        };
+        var memberTel = dataObj.memberTel;
+        var memberName = dataObj.memberName;
+        var competitionName = dataObj.competitionName;
+        var registryId = dataObj.registryId;
+        var registerName = dataObj.registerName;
+        var registerTel = dataObj.registerTel;
+        var registerImg = dataObj.registerImg;
+        var registerNo = dataObj.registerNo;
+        var reviewStatus = dataObj.reviewStatus;
+        var paymentAttachment = dataObj.paymentAttachment;
+        var paymentStatus = dataObj.paymentStatus;
+        var registerDate = dataObj.registerDate;
 
         $("#myModal").modal('show');
 
@@ -525,7 +612,7 @@
         $menuComponent = new menu(
             {
                 id: 'nav',
-                currentMenuName: '比赛类别'
+                currentMenuName: '报名管理'
             }
         );
         //todo 加载列表数据
