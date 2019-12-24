@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <!-- Title and other stuffs -->
+    <title>比赛管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="">
+    <!-- Stylesheets -->
+    <link href="../bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
+    <!-- Font awesome icon -->
+    <link rel="stylesheet" href="../style/font-awesome.min.css">
+    <!-- bootstrap-treeview -->
+    <link rel="stylesheet" href="../style/css/bootstrap-treeview.css">
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="../style/jquery-ui.css">
+
+    <!-- Main stylesheet -->
+    <link href="../style/style.css" rel="stylesheet">
+    <!-- Widgets stylesheet -->
+    <link href="../style/widgets.css" rel="stylesheet">
+
+    <!-- combobox -->
+    <link href="../style/css/bootstrap-combobox.css" rel="stylesheet">
+
+    <!-- HTML5 Support for IE -->
+    <!--[if lt IE 9]>
+    <script src="../js/html5shim.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top bs-docs-nav" role="banner">
+
+    <div class="conjtainer">
+        <!-- Menu button for smallar screens -->
+        <div class="navbar-header">
+            <button class="navbar-toggle btn-navbar" type="button" data-toggle="collapse"
+                    data-target=".bs-navbar-collapse">
+                <span>Menu</span>
+            </button>
+            <!-- Site name for smallar screens -->
+            <a href="login.html" class="navbar-brand hidden-lg">MacBeth</a>
+        </div>
+
+
+        <!-- Navigation starts -->
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+
+            <ul class="nav navbar-nav">
+
+                <!-- Upload to server link. Class "dropdown-big" creates big dropdown -->
+                <li class="dropdown dropdown-big">
+                    <a href="#" class="dropdown-toggle"><span class="label label-success"><i
+                            class="icon-cloud-upload"></i></span> 后台管理系统</a>
+                    <!-- Dropdown -->
+                    <ul class="dropdown-menu">
+                        <li>
+                            <!-- Progress bar -->
+                            <p>
+                                企业简介:无锡红光标牌有限公司是一家集研发、生产、销售和服务于一体的专业标牌生产厂家。注册资金500万人民币。主要生产塑料基材、软塑透明树脂、金属、模内复合等标牌产品，洗衣机顶盖板总成，平衡板，以及塑印、彩印、顶盖板、吸音垫等产品。公司位于长江三角洲经济快速增长、风景秀丽的太湖之畔——无锡。
+                                公司自1984年成立至今，已经过了3次跨越式的发展。2004年至今公司投入5000多万元资金建设新的生产基地，目前已竣工并投入生产，占地面积达40000m2，厂房面积近15000m2。公司2004年的年产值达4350多万元，并且每年以平均30%的速度快速增长。目前，本公司的产品已具备国际及国内多项质量认证证书，并为知名家用电器企业：小天鹅电器有限公司、三星电子有限公司、海尔集团、惠尔普等配套生产各类标牌。可以说客户是我们的老师，和他们合作使我们得到很多的学习机会来提高自身的技术水平和管理水平，是我们生产和发展的动力。
+                                公司本着“千方百计生产出满足顾客期望和要求的产品”的宗旨，坚持“工厂出产的不仅仅是产品，更重要的是信誉和质量”的经营理念，不断吸收新技术、引进新设备，使公司的经济效益蒸蒸日上。相信公司将会永不停止探索和发展的脚步，和中国国内以及世界国际性大公司同步发展。</p>
+
+
+                            <hr/>
+
+
+                        </li>
+                    </ul>
+                </li>
+
+
+            </ul>
+
+
+            <!-- Links -->
+            <ul class="nav navbar-nav pull-right">
+                <li class="dropdown pull-right">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <i class="icon-user"></i> Admin <b class="caret"></b>
+                    </a>
+
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><i class="icon-user"></i> Profile</a></li>
+                        <li><a href="#"><i class="icon-cogs"></i> Settings</a></li>
+                        <li><a href="#1" onclick="logout()"><i class="icon-off"></i> Logout</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+
+    </div>
+</div>
+
+<header>
+    <div class="container">
+
+    </div>
+</header>
+<!-- Main content starts -->
+
+<div class="content">
+
+    <!--todo 菜单部分 -->
+    <div class="sidebar">
+
+        <!--- Sidebar navigation -->
+        <!-- If the main navigation has sub navigation, then add the class "has_sub" to "li" of main navigation. -->
+        <ul id="nav">
+            <!-- Main menu with font awesome icon -->
+
+        </ul>
+    </div>
+    <!-- 菜单部分 ends -->
+
+    <!--todo 查询表单和数据列表 -->
+    <div class="mainbar">
+        <div class="matter">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+                <form id="queryForm">
+                    <table class="col-lg-12" border="1" style="font-size: 14pt;border:1px dashed grey">
+                        <tr style="height: 100px;">
+                            <td style="padding-left: 10px;">
+                                <div class="form-group" >
+                                    <div>姓名</div>
+                                    <div style="margin-top: 10px">
+                                        <input type="text"  value="张琳" >
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="padding-left: 10px;">
+                                <div class="form-group" >
+                                    <div>性别</div>
+                                    <div style="margin-top: 10px">
+                                        <input type="text" value="女">
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="padding-left: 10px;">
+                                <div class="form-group" >
+                                    <div>国籍</div>
+                                    <div style="margin-top: 10px">
+                                        <input type="text" value="中国">
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="col-lg-3" style="text-align: center">
+                                <div>照片</div>
+                            </td>
+                        </tr>
+                        <tr style="height: 100px;">
+                            <td style="padding-left: 10px;">
+                                <div class="form-group" >
+                                    <div>出生日期</div>
+                                    <div style="margin-top: 10px">
+                                        <input type="text"  value="2012-09-06" >
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="padding-left: 10px;">
+                                <div class="form-group" >
+                                    <div>年龄</div>
+                                    <div style="margin-top: 10px">
+                                        <input type="text" value="7">岁
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="padding-left: 10px;">
+                                <div class="form-group" >
+                                    <div>所在地区</div>
+                                    <div style="margin-top: 10px">
+                                        <input type="text" value="成都">
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="text-align: center" class="col-lg-3">
+                                <div class="form-group" >
+
+                                    <img src="../img/demo/tx.jpg" width="100px"></img>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 100px;">
+                            <td style="padding-left: 10px;">
+                                <div class="form-group" >
+                                    <div>就读学校通讯地址</div>
+
+                                </div>
+                            </td>
+                            <td style="padding-left: 10px;" colspan="2">
+                                <div class="form-group" >
+
+                                        <input type="text" value="" class="col-lg-11">
+
+                                </div>
+                            </td>
+
+                            <td style="text-align: center" class="col-lg-3">
+
+                            </td>
+                        </tr>
+                        <tr style="height: 100px;">
+                            <td style="padding-left: 10px;">
+                                <div class="form-group" >
+                                    <div>联系电话</div>
+
+                                </div>
+                            </td>
+                            <td style="padding-left: 10px;">
+                                <div class="form-group" >
+                                    <input type="text" value="" class="col-lg-11">
+
+                                </div>
+                            </td>
+                            <td style="padding-left: 10px;">
+                                <div class="form-group" >
+                                    <div>E-Mail</div>
+
+                                </div>
+                            </td>
+                            <td class="col-lg-3" style="text-align: center">
+                                <div class="form-group" >
+                                    <input type="text" value="" class="col-lg-11">
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 100px;">
+                            <td style="padding-left: 10px;">
+                                <div class="form-group" >
+                                    <div>指导教师</div>
+
+                                </div>
+                            </td>
+                            <td style="padding-left: 10px;">
+                                <div class="form-group" >
+                                    <input type="text" value="" class="col-lg-11">
+
+                                </div>
+                            </td>
+                            <td style="padding-left: 10px;">
+                                <div class="form-group" >
+                                    <div>联系电话</div>
+
+                                </div>
+                            </td>
+                            <td class="col-lg-3" style="text-align: center">
+                                <div class="form-group" >
+                                    <input type="text" value="" class="col-lg-11">
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 100px;">
+                            <td style="padding-left: 10px;">
+                                <div class="form-group" >
+                                    <div>参数曲目</div>
+
+                                </div>
+                            </td>
+                            <td style="padding-left: 10px;" colspan="3">
+                                <div class="form-group" >
+                                    <input type="text" value="" class="col-lg-11">
+
+                                </div>
+                            </td>
+
+                        </tr>
+                        <tr style="height: 100px;">
+                            <td style="padding-left: 10px;">
+                                <div class="form-group" >
+                                    <div>简介及获奖经历</div>
+
+                                </div>
+                            </td>
+                            <td style="padding-left: 10px;" colspan="3">
+                                <div class="form-group" >
+                                    <textarea class="form-control col-lg-11" rows="3"  id="remark"></textarea>
+
+
+                                </div>
+                            </td>
+
+                        </tr>
+                        <tr style="height: 100px;">
+                            <td style="padding-left: 10px;">
+                                <div class="form-group" >
+                                    <div>支付凭证</div>
+
+                                </div>
+                            </td>
+                            <td style="padding-left: 10px;" colspan="3">
+                                <div class="form-group" >
+                                    <img src="../img/demo/pz.jpeg" width="200px"></img>
+
+                                </div>
+                            </td>
+
+                        </tr>
+                        <tr style="height: 100px;">
+                            <td style="text-align: center" colspan="4">
+                                <button type="button" class="btn btn-primary" id="btn-save">保存</button>
+
+                                <button type="button" class="btn btn-warning" id="btn-warning">审核通过</button>
+                                <button type="button" class="btn btn-danger" id="btn-reject">审核拒绝</button>
+                                <button type="button" class="btn btn-info" id="btn-confirm">确认收款</button>
+                                <button type="button" class="btn btn-inverse" id="btn-download">下载</button>
+                            </td>
+
+
+                        </tr>
+                    </table>
+
+                </form>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!-- Content ends -->
+
+
+<!-- JS -->
+<script src="../js/jquery.js"></script> <!-- jQuery -->
+<script src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script> <!-- Bootstrap -->
+<script src="../js/jquery-ui-1.9.2.custom.min.js"></script> <!-- jQuery UI -->
+
+<script src="../js/fullcalendar.min.js"></script> <!-- Full Google Calendar - Calendar -->
+<script src="../js/jquery.prettyPhoto.js"></script> <!-- prettyPhoto -->
+
+<script src="../js/sparklines.js"></script> <!-- Sparklines -->
+<script src="../js/jquery.cleditor.min.js"></script> <!-- CLEditor -->
+<script src="../js/bootstrap-datetimepicker.min.js"></script> <!-- Date picker -->
+<script src="../js/bootstrap-switch.min.js"></script> <!-- Bootstrap Toggle -->
+<script src="../js/filter.js"></script> <!-- Filter for support page -->
+<script src="../js/custom.js"></script> <!-- Custom codes -->
+
+
+<script src="../js/util/pagenationJs.js"></script> <!-- pagination -->
+<script src="../js/bootstrap-combobox.js"></script> <!-- Combobox -->
+
+<script src="../js/util/menuJs.js"></script> <!-- menuJs -->
+
+<script src="../js/util/request.js"></script> <!-- menuJs -->
+
+<script src="../js/util/authority.js"></script> <!-- menuJs -->
+<script>
+
+    var $menuComponent;
+
+
+    function logout() {
+
+        var $request = new request();
+        $request.logout();
+    };
+
+
+    $(function () {
+
+        //todo 初始化菜单组件
+        $menuComponent = new menu(
+            {
+                id: 'nav',
+                currentMenuName: '比赛类别'
+            }
+        );
+        //todo 权限检测
+        checkAuth();
+    });
+
+</script>
+</body>
+</html>
